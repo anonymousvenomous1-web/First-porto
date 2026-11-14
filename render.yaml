@@ -17,3 +17,4 @@ services:
         value: /app/database/database.sqlite
       - key: LOG_CHANNEL
         value: stderr
+

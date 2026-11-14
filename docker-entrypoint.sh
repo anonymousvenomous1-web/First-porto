@@ -22,3 +22,4 @@ PORT="${PORT:-80}"
 
 echo "Starting FrankenPHP on port $PORT..."
 exec frankenphp php-server --listen ":${PORT}" --root /app/public
+
