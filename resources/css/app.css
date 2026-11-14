@@ -1,0 +1,144 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Purple-gold palette  */
+    --color-void-950:   #060412;
+    --color-void-900:   #0d0820;
+    --color-void-800:   #160d30;
+    --color-void-700:   #1e1240;
+    --color-void-600:   #261852;
+
+    --color-plum-900:   #1a0f38;
+    --color-plum-800:   #231448;
+    --color-plum-700:   #2e1b5c;
+    --color-plum-600:   #3b2470;
+    --color-plum-500:   #4f338a;
+    --color-plum-400:   #6b4fa8;
+    --color-plum-300:   #9270d0;
+    --color-plum-200:   #c0a8e8;
+    --color-plum-100:   #e5d8f8;
+
+    --color-gold-500:   #f5c518;
+    --color-gold-400:   #f7d340;
+    --color-gold-300:   #fae178;
+    --color-gold-200:   #fceeb8;
+    --color-gold-100:   #fef9e7;
+
+    --color-neon-gold:  #ffe033;
+    --color-neon-violet:#c084fc;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Portfolio always uses the dark-side palette */
+    body {
+        background-color: var(--color-void-950);
+        color: #e9e0ff;
+    }
+
+    /* R-39: cursor affordances */
+    a[href],
+    button:not(:disabled),
+    summary,
+    select,
+    label[for],
+    input[type='checkbox'],
+    input[type='radio'] {
+        cursor: pointer;
+    }
+
+    button:disabled,
+    input:disabled {
+        cursor: not-allowed;
+    }
+
+    /* R-32: visible focus ring */
+    :focus-visible {
+        outline: 2px solid #f7d340;
+        outline-offset: 3px;
+        border-radius: 6px;
+    }
+}
+
+/* ── Artistic grain overlay (adds texture without background grid pattern) ── */
+@layer utilities {
+    .bg-grain {
+        position: relative;
+    }
+    .bg-grain::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+        border-radius: inherit;
+    }
+
+    /* Gold neon glow — used at most on 2 key elements (R-13 dose cap) */
+    .glow-gold {
+        box-shadow: 0 0 18px 2px rgba(247, 211, 64, 0.35);
+    }
+    .glow-gold-sm {
+        box-shadow: 0 0 10px 1px rgba(247, 211, 64, 0.22);
+    }
+
+    /* Violet inner glow for accented cards */
+    .glow-violet {
+        box-shadow: 0 0 24px 4px rgba(192, 132, 252, 0.15);
+    }
+
+    /* Scroll-reveal base state (MOTION 2) */
+    .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.in-view {
+        opacity: 1;
+        transform: none;
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+}
+
+/* ── Selection colour ── */
+::selection {
+    background-color: #f7d340;
+    color: #0d0820;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    /* Keep reveal items visible immediately */
+    .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}

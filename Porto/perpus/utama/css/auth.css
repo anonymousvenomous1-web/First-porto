@@ -1,0 +1,263 @@
+.auth-body {
+    display: grid;
+    min-height: 100vh;
+    min-height: 100dvh;
+    place-items: center;
+    padding: 24px 14px;
+    background:
+        radial-gradient(circle at top left, rgba(210, 175, 228, 0.38), transparent 26%),
+        radial-gradient(circle at bottom right, rgba(243, 214, 181, 0.38), transparent 28%),
+        linear-gradient(180deg, #f8f4f2 0%, #f0eaf6 100%);
+    font-family: var(--font-body);
+    color: var(--ink);
+}
+
+body[data-theme="dark"].auth-body {
+    background:
+        radial-gradient(circle at top left, rgba(93, 79, 215, 0.22), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(160, 159, 255, 0.16), transparent 30%),
+        linear-gradient(180deg, #09111a 0%, #111d2d 100%);
+}
+
+.auth-shell {
+    width: min(100%, 500px);
+}
+
+.auth-card {
+    position: relative;
+    padding: clamp(26px, 6vw, 44px);
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(122, 96, 141, 0.18);
+    border-radius: 26px 26px 18px 18px;
+    box-shadow: 0 20px 46px rgba(92, 71, 107, 0.12);
+    backdrop-filter: blur(10px);
+    view-transition-name: auth-card-morph;
+    transition: min-height 380ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms ease;
+}
+
+body[data-theme="dark"] .auth-card {
+    background: rgba(18, 27, 39, 0.92);
+    border-color: var(--line);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.auth-brand {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    color: var(--forest-deep);
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+}
+
+.auth-brand span::after {
+    content: ".";
+    color: var(--accent);
+}
+
+.auth-kicker {
+    margin: 20px 0 4px;
+    color: var(--forest);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.auth-card h1 {
+    margin: 0;
+    color: var(--forest-deep);
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 6vw, 2.35rem);
+    line-height: 1.15;
+}
+
+.auth-intro {
+    margin: 10px 0 18px;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.auth-form {
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.auth-form label {
+    margin-top: 4px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--forest-deep);
+}
+
+.auth-profile-fields,
+.auth-registration-fields {
+    display: grid;
+    gap: 12px;
+}
+
+.auth-profile-fields[hidden],
+.auth-registration-fields[hidden] {
+    display: none !important;
+}
+
+.auth-note {
+    margin: 4px 0 0;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.4;
+}
+
+.auth-submit {
+    width: 100%;
+    margin-top: 14px;
+    min-height: 48px;
+    color: #fffdf8 !important;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+    box-shadow: 0 12px 26px rgba(93, 79, 215, 0.28);
+    border: none;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.auth-submit:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, #6c5ce7 0%, #4834d4 100%);
+    box-shadow: 0 16px 30px rgba(93, 79, 215, 0.35);
+}
+
+.auth-submit:disabled {
+    opacity: 0.75;
+    cursor: wait;
+}
+
+.auth-message {
+    margin: 16px 0;
+    padding: 12px 16px;
+    border: 1px solid currentColor;
+    border-radius: 10px;
+    line-height: 1.5;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.auth-error {
+    color: #991b1b;
+    background: #fef2f2;
+    border-color: #f87171;
+}
+
+body[data-theme="dark"] .auth-error {
+    color: #fca5a5;
+    background: rgba(239, 68, 68, 0.20);
+    border-color: #f87171;
+}
+
+.auth-switch {
+    margin: 22px 0 0;
+    color: var(--muted);
+    font-size: 0.92rem;
+    text-align: center;
+}
+
+.auth-switch a {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    margin-left: 4px;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+.auth-security {
+    margin: 16px 0 0;
+    padding-top: 14px;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    font-size: 0.84rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+/* ==========================================================================
+   PowerPoint Morph Animations for Auth
+   ========================================================================== */
+
+::view-transition-old(auth-card-morph),
+::view-transition-new(auth-card-morph) {
+    animation-duration: 440ms;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html[data-morph-dir="forward"]::view-transition-old(auth-card-morph) {
+    animation-name: pptAuthMorphOutLeft;
+}
+
+html[data-morph-dir="forward"]::view-transition-new(auth-card-morph) {
+    animation-name: pptAuthMorphInRight;
+}
+
+html[data-morph-dir="backward"]::view-transition-old(auth-card-morph) {
+    animation-name: pptAuthMorphOutRight;
+}
+
+html[data-morph-dir="backward"]::view-transition-new(auth-card-morph) {
+    animation-name: pptAuthMorphInLeft;
+}
+
+@keyframes pptAuthMorphOutLeft {
+    0% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0px); }
+    100% { opacity: 0; transform: translate3d(-34px, 0, 0) scale(0.976); filter: blur(2px); }
+}
+
+@keyframes pptAuthMorphInRight {
+    0% { opacity: 0; transform: translate3d(36px, 0, 0) scale(0.976); filter: blur(2px); }
+    100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0px); }
+}
+
+@keyframes pptAuthMorphOutRight {
+    0% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0px); }
+    100% { opacity: 0; transform: translate3d(34px, 0, 0) scale(0.976); filter: blur(2px); }
+}
+
+@keyframes pptAuthMorphInLeft {
+    0% { opacity: 0; transform: translate3d(-36px, 0, 0) scale(0.976); filter: blur(2px); }
+    100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0px); }
+}
+
+/* Fallback Morph Classes */
+.auth-card.morph-exit-forward {
+    animation: pptAuthMorphOutLeft 200ms cubic-bezier(0.2, 0, 0.4, 1) forwards;
+    pointer-events: none;
+}
+
+.auth-card.morph-exit-backward {
+    animation: pptAuthMorphOutRight 200ms cubic-bezier(0.2, 0, 0.4, 1) forwards;
+    pointer-events: none;
+}
+
+.auth-card.morph-enter-forward {
+    animation: pptAuthMorphInRight 440ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.auth-card.morph-enter-backward {
+    animation: pptAuthMorphInLeft 440ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 24px 18px;
+    }
+}
