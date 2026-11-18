@@ -121,15 +121,15 @@
 
                     <!-- H1 — one per page, R-39 -->
                     <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl" style="color:#f0ebff;line-height:1.08;">
-                        Building reliable
+                        Selamat datang, wahai
                         <span class="relative">
-                            <span style="color:#f7d340;">Laravel backends</span>
+                            <span style="color:#f7d340;">Kikiawan dan Kikiawati !</span>
                         </span>
-                        <br>and responsive web interfaces.
+                        <br>Silahkan menikmati portofolio singkat ini ^_^
                     </h1>
 
                     <p class="mt-6 max-w-xl text-lg leading-relaxed" style="color:#a89bc2;">
-                        I am a Full-Stack developer focused on clean software design, low-latency APIs, and structured database architecture in PHP&nbsp;8.5 and modern JavaScript.
+                        I am KIKII, a Full-Stack developer focused on clean software design, low-latency APIs, and structured database architecture in PHP&nbsp;8.5 and modern JavaScript.
                     </p>
 
                     <!-- CTAs (R-15: specific action labels; R-26: both navigate to real sections) -->
