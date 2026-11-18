@@ -14,6 +14,26 @@ class ProjectSeeder extends Seeder
     {
         $projects = [
             [
+                'title' => 'Paksadita Paksi',
+                'slug' => 'paksadita-paksi',
+                'tagline' => 'Platform web interaktif dan portofolio personal yang responsif dan modern.',
+                'category' => 'full-stack',
+                'description' => 'Paksadita Paksi adalah platform website interaktif yang dibangun dengan fokus pada kenyamanan penjelajahan, estetika visual yang elegan, dan performa tinggi di berbagai ukuran layar.',
+                'architecture_notes' => 'Dioptimalkan dengan prinsip clean code, struktur komponen modular, dan kompresi aset untuk pemuatan super cepat.',
+                'key_features' => [
+                    'Desain responsif yang adaptif untuk smartphone, tablet, hingga desktop',
+                    'Navigasi yang intuitif dengan hierarki informasi yang jelas',
+                    'Waktu muat halaman instan dan performa optimal',
+                    'Tampilan visual modern yang memanjakan mata',
+                ],
+                'tech_stack' => ['Laravel', 'PHP', 'Tailwind CSS', 'JavaScript'],
+                'github_url' => null,
+                'demo_url' => 'https://mrizqys.web.id',
+                'system_metrics' => 'Live & aktif di mrizqys.web.id',
+                'is_featured' => true,
+                'sort_order' => 1,
+            ],
+            [
                 'title' => 'LogPulse',
                 'slug' => 'logpulse-realtime-monitor',
                 'tagline' => 'High-throughput exception aggregation and real-time log telemetry for distributed Laravel services.',
@@ -31,7 +51,7 @@ class ProjectSeeder extends Seeder
                 'demo_url' => 'https://logpulse.example.dev',
                 'system_metrics' => 'Benchmarked at 35,000 events/sec on a single c6g.large instance',
                 'is_featured' => true,
-                'sort_order' => 1,
+                'sort_order' => 2,
             ],
             [
                 'title' => 'SchemaCraft',
