@@ -123,13 +123,13 @@
                     <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl" style="color:#f0ebff;line-height:1.08;">
                         Selamat datang, wahai
                         <span class="relative">
-                            <span style="color:#f7d340;">Kikiawan dan Kikiawati !</span>
+                            <span style="color:#f7d340;">Kikiawan dan Kikiawati</span>
                         </span>
                         <br>Silahkan menikmati portofolio singkat ini ^_^
                     </h1>
 
                     <p class="mt-6 max-w-xl text-lg leading-relaxed" style="color:#a89bc2;">
-                        I am KIKII, a Full-Stack developer focused on clean software design, low-latency APIs, and structured database architecture in PHP&nbsp;8.5 and modern JavaScript.
+                        Aku KIKII, seorang Full-Stack developer yang fokus pada desain aplikasi yang bersih, API yang efisien, arsitektur database terstruktur pada PHP&nbsp;8.5 dan JavaScript modern.
                     </p>
 
                     <!-- CTAs (R-15: specific action labels; R-26: both navigate to real sections) -->
@@ -139,14 +139,14 @@
                            style="background:#f7d340;color:#0d0820;"
                            onmouseover="this.style.background='#ffe033';this.style.boxShadow='0 0 22px 3px rgba(247,211,64,0.45)'"
                            onmouseout="this.style.background='#f7d340';this.style.boxShadow='none'">
-                            View Selected Works
+                            Lihat hasil kerja
                         </a>
                         <a href="#contact"
                            class="inline-flex min-h-[44px] items-center justify-center rounded-xl border px-6 py-3 text-base font-semibold transition-all duration-200"
                            style="border-color:rgba(107,79,168,0.6);color:#c0a8e8;"
                            onmouseover="this.style.borderColor='rgba(192,132,252,0.7)';this.style.color='#e9e0ff';this.style.background='rgba(79,51,138,0.2)'"
                            onmouseout="this.style.borderColor='rgba(107,79,168,0.6)';this.style.color='#c0a8e8';this.style.background='transparent'">
-                            Hire Directly
+                            Rekrut langsung
                         </a>
                     </div>
 
@@ -227,7 +227,7 @@
                         Selected Projects
                     </h2>
                     <p class="mt-3 max-w-xl text-base" style="color:#9270d0;">
-                        Production systems, open-source utilities, and architectural implementations in Laravel, PostgreSQL, and JavaScript.
+                        Sistem produksi, utilitas sumber terbuka, dan implementasi arsitektur dalam Laravel, PostgreSQL, dan JavaScript modern.
                     </p>
                 </div>
 
@@ -333,16 +333,16 @@
                     </article>
                 @empty
                     <div class="col-span-full rounded-2xl border border-dashed p-12 text-center" style="border-color:rgba(107,79,168,0.3);">
-                        <p class="font-semibold" style="color:#f0ebff;">No projects found.</p>
-                        <p class="mt-1 text-sm" style="color:#6b4fa8;">Run the project seeder to populate portfolio data.</p>
+                        <p class="font-semibold" style="color:#f0ebff;">Belum ada project.</p>
+                        <p class="mt-1 text-sm" style="color:#6b4fa8;">Masih dalam tahap pengembangan.</p>
                     </div>
                 @endforelse
             </div>
 
             <!-- Filter empty state (R-27) -->
             <div id="projects-empty-state" class="hidden mt-8 rounded-2xl border border-dashed p-12 text-center" style="border-color:rgba(107,79,168,0.3);">
-                <p class="font-semibold" style="color:#f0ebff;">No projects in this category.</p>
-                <p class="mt-1 text-sm" style="color:#6b4fa8;">Select another filter tab to view additional work.</p>
+                <p class="font-semibold" style="color:#f0ebff;">Belum ada proyek.</p>
+                <p class="mt-1 text-sm" style="color:#6b4fa8;">Masih dalam tahap pengembangan.</p>
             </div>
         </div>
     </section>
@@ -356,7 +356,7 @@
                     Architecture &amp; Core Skills
                 </h2>
                 <p class="mt-3 text-base" style="color:#9270d0;">
-                    A disciplined approach to software focused on correctness, maintainability, and measurable runtime performance.
+                    Pendekatan disiplin yang terfokus pada maintainabilitas, solvabilitas dan performa terukur
                 </p>
             </div>
 
