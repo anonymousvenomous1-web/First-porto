@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreContactMessageRequest;
+use App\Mail\ContactMessageReceived;
 use App\Models\ContactMessage;
 use App\Models\Project;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class PortfolioController extends Controller
@@ -57,6 +60,13 @@ class PortfolioController extends Controller
             ...$validated,
             'ip_address' => $request->ip(),
         ]);
+
+        try {
+            $adminEmail = config('mail.admin_address', 'gamergoblin889@gmail.com');
+            Mail::to($adminEmail)->send(new ContactMessageReceived($message));
+        } catch (\Throwable $e) {
+            Log::error('Failed to dispatch contact message email: '.$e->getMessage());
+        }
 
         $successText = 'Terima kasih telah menghubungi, '.$message->name.'! Pesan Anda sudah saya terima dan akan saya balas ke '.$message->email.' secepatnya.';
 
