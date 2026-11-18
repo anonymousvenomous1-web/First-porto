@@ -58,7 +58,7 @@ class PortfolioController extends Controller
             'ip_address' => $request->ip(),
         ]);
 
-        $successText = 'Thank you for reaching out, '.$message->name.'! Your message has been received. I will reply to '.$message->email.' promptly.';
+        $successText = 'Terima kasih telah menghubungi, '.$message->name.'! Pesan Anda sudah saya terima dan akan saya balas ke '.$message->email.' secepatnya.';
 
         if ($request->wantsJson()) {
             return response()->json([
