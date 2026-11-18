@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Mail\ContactMessageReceived;
 use App\Models\Project;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class PortfolioFeatureTest extends TestCase
@@ -81,6 +83,28 @@ class PortfolioFeatureTest extends TestCase
         $this->assertDatabaseHas('contact_messages', [
             'email' => 'devon@example.com',
         ]);
+    }
+
+    public function test_contact_form_sends_email_notification(): void
+    {
+        Mail::fake();
+
+        $payload = [
+            'name' => 'Kiki Visitor',
+            'email' => 'visitor@example.com',
+            'subject' => 'Project Inquiry',
+            'message' => 'Hello, I love your portfolio!',
+        ];
+
+        $response = $this->postJson(route('portfolio.contact.store'), $payload);
+
+        $response->assertCreated();
+
+        Mail::assertSent(ContactMessageReceived::class, function ($mail) {
+            return $mail->hasTo('gamergoblin889@gmail.com')
+                && $mail->contactMessage->email === 'visitor@example.com'
+                && $mail->contactMessage->subject === 'Project Inquiry';
+        });
     }
 
     public function test_contact_form_validates_required_fields(): void
