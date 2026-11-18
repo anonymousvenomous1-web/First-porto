@@ -207,7 +207,7 @@ function initContactForm() {
         clearErrors();
 
         if (submitBtn) submitBtn.disabled = true;
-        if (btnText)    btnText.textContent = 'Transmitting...';
+        if (btnText)    btnText.textContent = 'Mengirim pesan...';
         if (btnSpinner) btnSpinner.classList.remove('hidden');
 
         try {
@@ -220,7 +220,7 @@ function initContactForm() {
 
             if (res.ok && data.success) {
                 form.reset();
-                showStatus(data.message || 'Message sent. I will reply promptly.', true);
+                showStatus(data.message || 'Pesan Anda berhasil dikirim! Terima kasih, saya akan segera membalasnya.', true);
             } else if (res.status === 422 && data.errors) {
                 Object.entries(data.errors).forEach(([field, msgs]) => {
                     const fb    = form.querySelector(`[data-error-feedback="${field}"]`);
@@ -228,15 +228,15 @@ function initContactForm() {
                     if (fb) { fb.textContent = msgs[0]; fb.classList.remove('hidden'); }
                     if (input) input.classList.add('border-red-500');
                 });
-                showStatus('Please fix the highlighted fields above.', false);
+                showStatus('Mohon periksa kembali kolom isian yang ditandai merah di atas.', false);
             } else {
-                showStatus('Something went wrong. Please try again or email directly.', false);
+                showStatus('Terjadi kendala saat mengirim pesan. Silakan coba lagi atau hubungi via email langsung.', false);
             }
         } catch {
             form.submit();
         } finally {
             if (submitBtn) submitBtn.disabled = false;
-            if (btnText)    btnText.textContent = 'Send Message';
+            if (btnText)    btnText.textContent = 'Kirim Pesan';
             if (btnSpinner) btnSpinner.classList.add('hidden');
         }
     });
