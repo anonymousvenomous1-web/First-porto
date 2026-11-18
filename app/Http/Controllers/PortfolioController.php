@@ -20,16 +20,21 @@ class PortfolioController extends Controller
      */
     public function index(Request $request): View
     {
-        $projects = Project::query()
-            ->orderBy('sort_order')
-            ->orderBy('id')
-            ->get();
+        try {
+            $projects = Project::query()
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->get();
+        } catch (\Throwable $e) {
+            Log::warning('Database connection failed, using fallback projects: '.$e->getMessage());
+            $projects = collect();
+        }
 
         $categories = [
-            'all' => 'All Work ('.$projects->count().')',
-            'full-stack' => 'Full-Stack ('.$projects->where('category', 'full-stack')->count().')',
+            'all' => 'Semua Karya ('.$projects->count().')',
+            'full-stack' => 'Aplikasi Web ('.$projects->where('category', 'full-stack')->count().')',
             'backend-api' => 'Backend & API ('.$projects->where('category', 'backend-api')->count().')',
-            'dev-tool' => 'Developer Tools ('.$projects->where('category', 'dev-tool')->count().')',
+            'dev-tool' => 'Alat & Utilitas ('.$projects->where('category', 'dev-tool')->count().')',
         ];
 
         return view('portfolio', [
@@ -56,10 +61,18 @@ class PortfolioController extends Controller
         $validated = $request->validated();
         unset($validated['company_hp']);
 
-        $message = ContactMessage::create([
-            ...$validated,
-            'ip_address' => $request->ip(),
-        ]);
+        try {
+            $message = ContactMessage::create([
+                ...$validated,
+                'ip_address' => $request->ip(),
+            ]);
+        } catch (\Throwable $e) {
+            Log::error('Failed to save contact message to database: '.$e->getMessage());
+            $message = new ContactMessage([
+                ...$validated,
+                'ip_address' => $request->ip(),
+            ]);
+        }
 
         try {
             $adminEmail = config('mail.admin_address', 'gamergoblin889@gmail.com');
