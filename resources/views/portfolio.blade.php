@@ -16,10 +16,23 @@
 
 <body class="antialiased min-h-screen" style="background:#060412;color:#e9e0ff;">
 
-    {{-- SVG radial aura behind hero --}}
-    <div class="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
-        <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full opacity-20"
-             style="background:radial-gradient(ellipse at 50% 0%, #6b4fa8 0%, transparent 70%);"></div>
+    <!-- ━━━ CELESTIAL BACKGROUND: PARALLAX STARS & DREAMY NEBULAS ━━━ -->
+    <div class="pointer-events-none fixed inset-0 overflow-hidden z-0" aria-hidden="true">
+        <!-- Parallax Stars Canvas -->
+        <canvas id="parallax-stars-canvas" class="absolute inset-0 h-full w-full"></canvas>
+
+        <!-- Dreamy Soft Light Nebulas -->
+        <div class="dreamy-nebula-1 absolute -top-40 left-1/2 -translate-x-1/2 w-[1100px] h-[750px] rounded-full pointer-events-none"
+             style="background:radial-gradient(ellipse at center, rgba(107,79,168,0.32) 0%, rgba(79,51,138,0.18) 42%, transparent 75%);filter:blur(85px);mix-blend-mode:screen;"></div>
+
+        <div class="dreamy-nebula-2 absolute top-1/3 -left-52 w-[800px] h-[800px] rounded-full pointer-events-none"
+             style="background:radial-gradient(circle, rgba(192,132,252,0.18) 0%, rgba(46,27,92,0.1) 48%, transparent 75%);filter:blur(95px);mix-blend-mode:screen;"></div>
+
+        <div class="dreamy-nebula-1 absolute top-2/3 -right-48 w-[850px] h-[850px] rounded-full pointer-events-none"
+             style="background:radial-gradient(circle, rgba(247,211,64,0.12) 0%, rgba(107,79,168,0.14) 45%, transparent 75%);filter:blur(105px);mix-blend-mode:screen;"></div>
+
+        <div class="dreamy-nebula-2 absolute bottom-0 left-1/4 w-[900px] h-[700px] rounded-full pointer-events-none"
+             style="background:radial-gradient(ellipse, rgba(147,112,219,0.16) 0%, rgba(22,13,48,0.08) 50%, transparent 75%);filter:blur(90px);mix-blend-mode:screen;"></div>
     </div>
 
     <!-- ━━━ HEADER ━━━ -->
@@ -91,7 +104,7 @@
         </div>
     </header>
 
-    <main id="main-content">
+    <main id="main-content" class="relative z-10">
 
     <!-- ━━━ HERO ━━━ -->
     <section class="relative overflow-hidden pt-16 pb-24 md:pt-24 md:pb-32">
@@ -259,7 +272,7 @@
 
             <!-- Featured Showcase: Paksadita Paksi -->
             <div class="reveal mt-10 rounded-2xl border p-6 sm:p-8"
-                 style="border-color:rgba(247,211,64,0.35);background:radial-gradient(ellipse at top right, rgba(79,51,138,0.3) 0%, rgba(22,13,48,0.9) 70%);box-shadow:0 0 40px 4px rgba(247,211,64,0.08);">
+                 style="border-color:rgba(247,211,64,0.35);background:radial-gradient(ellipse at top right, rgba(107,79,168,0.32) 0%, rgba(22,13,48,0.9) 70%);box-shadow:0 0 50px 6px rgba(192,132,252,0.16), 0 0 100px 20px rgba(247,211,64,0.07);">
                 <div class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-center">
                     <div class="lg:col-span-7">
                         <div class="flex flex-wrap items-center gap-2.5">
@@ -822,7 +835,7 @@
     </main>
 
     <!-- ━━━ FOOTER ━━━ -->
-    <footer class="border-t py-10" style="border-color:rgba(107,79,168,0.2);background:rgba(6,4,18,0.8);">
+    <footer class="relative z-10 border-t py-10" style="border-color:rgba(107,79,168,0.2);background:rgba(6,4,18,0.85);backdrop-filter:blur(12px);">
         <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6 lg:px-8">
             <span class="text-sm" style="color:#9270d0;">
                 <span style="color:#c0a8e8;font-weight:600;">Kikii &bull; Full-Stack Web Developer</span>
