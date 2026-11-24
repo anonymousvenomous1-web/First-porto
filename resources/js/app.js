@@ -395,7 +395,7 @@ function esc(str) {
         .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 }
 
-/* ── Celestial Parallax Stars Background ("Ekstra Gebyar" & Dense Cosmos) ─ */
+/* ── Celestial Parallax Stars Background ────────────────────────────────── */
 function initParallaxStars() {
     const canvas = document.getElementById('parallax-stars-canvas');
     if (!canvas) return;
@@ -409,8 +409,6 @@ function initParallaxStars() {
     let height = 0;
     let dpr = 1;
     let stars = [];
-    let shootingStars = [];
-    let nextShootingStarTime = Date.now() + 1500;
     let animationFrameId = null;
 
     let scrollY = window.scrollY || 0;
@@ -420,18 +418,15 @@ function initParallaxStars() {
     let targetMouseX = 0;
     let targetMouseY = 0;
 
-    // Dense celestial cosmos: ~480 on mobile up to 900 on widescreen
-    const STAR_COUNT = Math.min(900, Math.max(480, Math.floor(window.innerWidth / 1.8)));
+    // Density based on viewport width: ~140 on mobile up to 280 on widescreen
+    const STAR_COUNT = Math.min(280, Math.max(140, Math.floor(window.innerWidth / 5.5)));
 
     const STAR_COLORS = [
-        { r: 250, g: 225, b: 120 }, // Radiant Warm Gold
-        { r: 247, g: 211, b: 64 },  // Luminous Amber Gold
-        { r: 192, g: 132, b: 252 }, // Celestial Violet
-        { r: 216, g: 180, b: 254 }, // Dreamy Lavender
-        { r: 165, g: 180, b: 252 }, // Cyan / Periwinkle
-        { r: 103, g: 232, b: 249 }, // Electric Aqua
-        { r: 255, g: 255, b: 255 }, // Pure Diamond White
-        { r: 244, g: 114, b: 182 }, // Rose Quartz Pink
+        { r: 250, g: 225, b: 120 }, // Warm Starlight Gold
+        { r: 192, g: 132, b: 252 }, // Dreamy Celestial Violet
+        { r: 165, g: 180, b: 252 }, // Ethereal Cyan / Periwinkle
+        { r: 255, g: 255, b: 255 }, // Pure Radiant White
+        { r: 247, g: 211, b: 64 },  // Luminous Gold Accent
     ];
 
     function resize() {
@@ -449,45 +444,36 @@ function initParallaxStars() {
     }
 
     function createStar() {
+        // Distribute across 3 depth layers
         const rand = Math.random();
         let layer = 1;
-        let baseRadius = 0.55;
+        let baseRadius = 0.65;
         let speedMultiplier = 0.12;
         let parallaxFactor = 0.05;
-        let sparkleType = 'none';
 
-        if (rand > 0.94) {
-            // Layer 4: Supernova / Diamond Glints (Ekstra Gebyar 8-point flare)
-            layer = 4;
-            baseRadius = 2.2 + Math.random() * 1.2;
-            speedMultiplier = 0.42 + Math.random() * 0.25;
-            parallaxFactor = 0.38;
-            sparkleType = '8-point-diamond';
-        } else if (rand > 0.80) {
-            // Layer 3: Radiant Gem Stars (Brilliant 4-point sparkle flare)
+        if (rand > 0.82) {
+            // Layer 3: Foreground gem star (bright, soft dreamy bloom halo)
             layer = 3;
-            baseRadius = 1.5 + Math.random() * 0.9;
-            speedMultiplier = 0.32 + Math.random() * 0.18;
-            parallaxFactor = 0.28;
-            sparkleType = Math.random() > 0.3 ? '4-point' : 'none';
-        } else if (rand > 0.48) {
-            // Layer 2: Glittering mid-ground stars
+            baseRadius = 1.6 + Math.random() * 0.9;
+            speedMultiplier = 0.35 + Math.random() * 0.18;
+            parallaxFactor = 0.32;
+        } else if (rand > 0.45) {
+            // Layer 2: Mid-ground star
             layer = 2;
-            baseRadius = 0.9 + Math.random() * 0.55;
-            speedMultiplier = 0.18 + Math.random() * 0.12;
-            parallaxFactor = 0.14;
-            sparkleType = Math.random() > 0.7 ? '4-point' : 'none';
+            baseRadius = 1.0 + Math.random() * 0.55;
+            speedMultiplier = 0.2 + Math.random() * 0.12;
+            parallaxFactor = 0.15;
         } else {
-            // Layer 1: Dense micro-stardust field
+            // Layer 1: Distant stardust
             layer = 1;
-            baseRadius = 0.4 + Math.random() * 0.45;
-            speedMultiplier = 0.07 + Math.random() * 0.07;
+            baseRadius = 0.5 + Math.random() * 0.45;
+            speedMultiplier = 0.08 + Math.random() * 0.07;
             parallaxFactor = 0.05;
-            sparkleType = 'none';
         }
 
         const color = STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)];
-        const angle = -Math.PI / 2 + (Math.random() - 0.45) * 0.7;
+        // Slight drift vector: gently drifting upwards and slightly to the right
+        const angle = -Math.PI / 2 + (Math.random() - 0.45) * 0.6;
         const speed = prefersReducedMotion ? 0 : speedMultiplier;
 
         return {
@@ -499,13 +485,11 @@ function initParallaxStars() {
             vx: Math.cos(angle) * speed,
             vy: Math.sin(angle) * speed,
             parallaxFactor,
-            sparkleType,
-            baseAlpha: layer === 4 ? 0.9 : layer === 3 ? 0.8 : layer === 2 ? 0.55 : 0.35,
+            baseAlpha: layer === 3 ? 0.75 : layer === 2 ? 0.5 : 0.28,
             twinklePhase: Math.random() * Math.PI * 2,
-            twinkleSpeed: 0.02 + Math.random() * 0.055,
-            twinkleAmp: 0.25 + Math.random() * 0.35,
-            rotation: Math.random() * Math.PI,
-            rotationSpeed: (Math.random() - 0.5) * 0.008,
+            twinkleSpeed: 0.015 + Math.random() * 0.035,
+            twinkleAmp: 0.18 + Math.random() * 0.22,
+            isSparkle: layer === 3 && Math.random() > 0.45,
         };
     }
 
@@ -514,27 +498,6 @@ function initParallaxStars() {
         for (let i = 0; i < STAR_COUNT; i++) {
             stars.push(createStar());
         }
-    }
-
-    function spawnShootingStar() {
-        if (prefersReducedMotion) return;
-        const startX = Math.random() * (width * 1.2) - width * 0.1;
-        const startY = Math.random() * (height * 0.4);
-        const angle = Math.PI / 4 + (Math.random() - 0.5) * 0.3;
-        const speed = 7 + Math.random() * 6;
-        const length = 100 + Math.random() * 120;
-        const color = Math.random() > 0.4 ? { r: 247, g: 211, b: 64 } : { r: 192, g: 132, b: 252 };
-
-        shootingStars.push({
-            x: startX,
-            y: startY,
-            vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * speed,
-            length,
-            color,
-            alpha: 1,
-            fadeSpeed: 0.016 + Math.random() * 0.012,
-        });
     }
 
     // Passive listeners for fluid parallax response
@@ -547,111 +510,37 @@ function initParallaxStars() {
         targetMouseY = (e.clientY / height - 0.5) * 2;
     }, { passive: true });
 
-    function drawDiamondFlare(cx, cy, radius, alpha, rgb, isEightPoint, rotation) {
+    function drawSparkleCross(cx, cy, radius, alpha, rgb) {
         ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate(rotation);
+        ctx.strokeStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha * 0.75})`;
+        ctx.lineWidth = 0.75;
+        const arm = radius * 3.2;
 
-        const primaryArm = radius * (isEightPoint ? 4.5 : 3.5);
-        const secondaryArm = primaryArm * 0.55;
-
-        // Radiant central diamond core
-        const coreSize = radius * 1.2;
-        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
         ctx.beginPath();
-        ctx.moveTo(0, -coreSize);
-        ctx.lineTo(coreSize * 0.6, 0);
-        ctx.lineTo(0, coreSize);
-        ctx.lineTo(-coreSize * 0.6, 0);
-        ctx.closePath();
-        ctx.fill();
-
-        // Primary 4-point cross flare
-        ctx.strokeStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha * 0.85})`;
-        ctx.lineWidth = isEightPoint ? 1.0 : 0.8;
-        ctx.beginPath();
-        ctx.moveTo(-primaryArm, 0);
-        ctx.lineTo(primaryArm, 0);
-        ctx.moveTo(0, -primaryArm);
-        ctx.lineTo(0, primaryArm);
+        ctx.moveTo(cx - arm, cy);
+        ctx.lineTo(cx + arm, cy);
+        ctx.moveTo(cx, cy - arm);
+        ctx.lineTo(cx, cy + arm);
         ctx.stroke();
-
-        // Secondary diagonal flare for 8-point supernovas
-        if (isEightPoint) {
-            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.6})`;
-            ctx.lineWidth = 0.65;
-            ctx.beginPath();
-            ctx.moveTo(-secondaryArm, -secondaryArm);
-            ctx.lineTo(secondaryArm, secondaryArm);
-            ctx.moveTo(secondaryArm, -secondaryArm);
-            ctx.lineTo(-secondaryArm, secondaryArm);
-            ctx.stroke();
-        }
-
         ctx.restore();
     }
 
     function render() {
-        scrollY += (targetScrollY - scrollY) * 0.08;
+        // Smoothly interpolate scroll and mouse parallax
+        scrollY += (targetScrollY - scrollY) * 0.07;
         mouseX += (targetMouseX - mouseX) * 0.05;
         mouseY += (targetMouseY - mouseY) * 0.05;
 
         ctx.clearRect(0, 0, width, height);
 
-        // Check shooting star spawn
-        const now = Date.now();
-        if (now > nextShootingStarTime) {
-            spawnShootingStar();
-            nextShootingStarTime = now + 3000 + Math.random() * 4000;
-        }
-
-        // Render shooting stars
-        for (let j = shootingStars.length - 1; j >= 0; j--) {
-            const ss = shootingStars[j];
-            ss.x += ss.vx;
-            ss.y += ss.vy;
-            ss.alpha -= ss.fadeSpeed;
-
-            if (ss.alpha <= 0 || ss.x > width + 100 || ss.y > height + 100) {
-                shootingStars.splice(j, 1);
-                continue;
-            }
-
-            const tailX = ss.x - (ss.vx / Math.hypot(ss.vx, ss.vy)) * ss.length;
-            const tailY = ss.y - (ss.vy / Math.hypot(ss.vx, ss.vy)) * ss.length;
-
-            const grad = ctx.createLinearGradient(tailX, tailY, ss.x, ss.y);
-            grad.addColorStop(0, `rgba(${ss.color.r}, ${ss.color.g}, ${ss.color.b}, 0)`);
-            grad.addColorStop(0.7, `rgba(${ss.color.r}, ${ss.color.g}, ${ss.color.b}, ${ss.alpha * 0.5})`);
-            grad.addColorStop(1, `rgba(255, 255, 255, ${ss.alpha * 0.95})`);
-
-            ctx.save();
-            ctx.strokeStyle = grad;
-            ctx.lineWidth = 1.8;
-            ctx.lineCap = 'round';
-            ctx.beginPath();
-            ctx.moveTo(tailX, tailY);
-            ctx.lineTo(ss.x, ss.y);
-            ctx.stroke();
-
-            // Head glow
-            ctx.fillStyle = `rgba(255, 255, 255, ${ss.alpha})`;
-            ctx.beginPath();
-            ctx.arc(ss.x, ss.y, 2.2, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
-        }
-
-        // Render stars
         for (let i = 0; i < stars.length; i++) {
             const s = stars[i];
 
-            // Drift
+            // Continuous drift motion
             s.x += s.vx;
             s.y += s.vy;
-            s.rotation += s.rotationSpeed;
 
-            // Wrap
+            // Infinite boundary wrapping
             if (s.x < -20) s.x = width + 20;
             if (s.x > width + 20) s.x = -20;
             if (s.y < -20) s.y = height + 20;
@@ -659,12 +548,13 @@ function initParallaxStars() {
 
             // Twinkle oscillation
             s.twinklePhase += s.twinkleSpeed;
-            const currentAlpha = Math.max(0.12, Math.min(1, s.baseAlpha + Math.sin(s.twinklePhase) * s.twinkleAmp));
+            const currentAlpha = Math.max(0.1, Math.min(1, s.baseAlpha + Math.sin(s.twinklePhase) * s.twinkleAmp));
 
-            // Parallax
-            const parallaxX = mouseX * 22 * s.parallaxFactor;
-            const parallaxY = -(scrollY * s.parallaxFactor * 0.38) + (mouseY * 22 * s.parallaxFactor);
+            // Parallax offset based on depth layer
+            const parallaxX = mouseX * 20 * s.parallaxFactor;
+            const parallaxY = -(scrollY * s.parallaxFactor * 0.35) + (mouseY * 20 * s.parallaxFactor);
 
+            // Calculate rendered position with wrapping
             let drawX = (s.x + parallaxX) % width;
             if (drawX < 0) drawX += width;
             let drawY = (s.y + parallaxY) % height;
@@ -672,44 +562,37 @@ function initParallaxStars() {
 
             const rgb = s.color;
 
-            // Soft dreamy glow halo
-            if (s.layer >= 3) {
-                const haloRadius = s.layer === 4 ? s.radius * 4.4 : s.radius * 3.4;
-                const grad = ctx.createRadialGradient(drawX, drawY, 0, drawX, drawY, haloRadius);
-                grad.addColorStop(0, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha * 0.95})`);
-                grad.addColorStop(0.35, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha * 0.38})`);
+            // Soft dreamy glow halo for layer 2 & 3 stars
+            if (s.layer === 3) {
+                // Layer 3: Dreamy ambient halo bloom
+                const grad = ctx.createRadialGradient(drawX, drawY, 0, drawX, drawY, s.radius * 3.6);
+                grad.addColorStop(0, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha * 0.9})`);
+                grad.addColorStop(0.35, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha * 0.32})`);
                 grad.addColorStop(1, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0)`);
 
                 ctx.fillStyle = grad;
                 ctx.beginPath();
-                ctx.arc(drawX, drawY, haloRadius, 0, Math.PI * 2);
+                ctx.arc(drawX, drawY, s.radius * 3.6, 0, Math.PI * 2);
                 ctx.fill();
 
-                if (s.sparkleType === '8-point-diamond') {
-                    drawDiamondFlare(drawX, drawY, s.radius, currentAlpha, rgb, true, s.rotation);
-                } else if (s.sparkleType === '4-point') {
-                    drawDiamondFlare(drawX, drawY, s.radius, currentAlpha, rgb, false, s.rotation);
+                if (s.isSparkle) {
+                    drawSparkleCross(drawX, drawY, s.radius, currentAlpha, rgb);
                 }
             } else if (s.layer === 2) {
-                const grad = ctx.createRadialGradient(drawX, drawY, 0, drawX, drawY, s.radius * 2.4);
-                grad.addColorStop(0, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha * 0.88})`);
-                grad.addColorStop(0.5, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha * 0.25})`);
+                // Layer 2: Subtle soft bloom
+                const grad = ctx.createRadialGradient(drawX, drawY, 0, drawX, drawY, s.radius * 2.2);
+                grad.addColorStop(0, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha * 0.85})`);
+                grad.addColorStop(0.5, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha * 0.2})`);
                 grad.addColorStop(1, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0)`);
 
                 ctx.fillStyle = grad;
                 ctx.beginPath();
-                ctx.arc(drawX, drawY, s.radius * 2.4, 0, Math.PI * 2);
+                ctx.arc(drawX, drawY, s.radius * 2.2, 0, Math.PI * 2);
                 ctx.fill();
-
-                if (s.sparkleType === '4-point') {
-                    drawDiamondFlare(drawX, drawY, s.radius, currentAlpha, rgb, false, s.rotation);
-                }
             }
 
-            // Central radiant starlight core
-            ctx.fillStyle = s.layer >= 3
-                ? `rgba(255, 255, 255, ${currentAlpha})`
-                : `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha})`;
+            // Central starlight core
+            ctx.fillStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha})`;
             ctx.beginPath();
             ctx.arc(drawX, drawY, s.radius * 0.85, 0, Math.PI * 2);
             ctx.fill();
@@ -718,6 +601,7 @@ function initParallaxStars() {
         animationFrameId = requestAnimationFrame(render);
     }
 
+    // Auto-pause animation when tab is inactive to preserve battery and CPU
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
             if (animationFrameId) cancelAnimationFrame(animationFrameId);
