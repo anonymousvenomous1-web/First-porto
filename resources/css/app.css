@@ -87,17 +87,48 @@
         border-radius: inherit;
     }
 
-    /* Gold neon glow — used at most on 2 key elements (R-13 dose cap) */
-    .glow-gold {
-        box-shadow: 0 0 18px 2px rgba(247, 211, 64, 0.35);
+    /* Soft dreamy diffuse glow: multi-layered atmospheric bloom */
+    .glow-gold,
+    .glow-dreamy-gold {
+        box-shadow:
+            0 0 14px 2px rgba(247, 211, 64, 0.3),
+            0 0 35px 8px rgba(247, 211, 64, 0.16),
+            0 0 70px 18px rgba(247, 211, 64, 0.07);
     }
     .glow-gold-sm {
-        box-shadow: 0 0 10px 1px rgba(247, 211, 64, 0.22);
+        box-shadow:
+            0 0 10px 1px rgba(247, 211, 64, 0.22),
+            0 0 25px 4px rgba(247, 211, 64, 0.12),
+            0 0 50px 10px rgba(247, 211, 64, 0.05);
     }
 
-    /* Violet inner glow for accented cards */
-    .glow-violet {
-        box-shadow: 0 0 24px 4px rgba(192, 132, 252, 0.15);
+    /* Soft dreamy celestial violet bloom */
+    .glow-violet,
+    .glow-dreamy-violet {
+        box-shadow:
+            0 0 16px 2px rgba(192, 132, 252, 0.25),
+            0 0 42px 8px rgba(168, 85, 247, 0.15),
+            0 0 85px 20px rgba(107, 79, 168, 0.08);
+    }
+
+    /* Soft dreamy ambient backlight */
+    .glow-dreamy-ambient {
+        box-shadow:
+            0 0 50px 10px rgba(107, 79, 168, 0.18),
+            0 0 100px 25px rgba(79, 51, 138, 0.12),
+            0 0 160px 40px rgba(247, 211, 64, 0.04);
+    }
+
+    /* Ethereal dreamy text glows */
+    .glow-text-gold {
+        text-shadow:
+            0 0 12px rgba(247, 211, 64, 0.45),
+            0 0 28px rgba(247, 211, 64, 0.2);
+    }
+    .glow-text-violet {
+        text-shadow:
+            0 0 12px rgba(192, 132, 252, 0.45),
+            0 0 28px rgba(168, 85, 247, 0.2);
     }
 
     /* Scroll-reveal base state (MOTION 2) */
@@ -116,6 +147,39 @@
     .reveal-delay-4 { transition-delay: 0.4s; }
 }
 
+/* ── Dreamy Background Breathing Nebulas ── */
+@keyframes dreamy-float-slow {
+    0%, 100% {
+        transform: translate3d(0, 0, 0) scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translate3d(30px, -40px, 0) scale(1.1);
+        opacity: 0.45;
+    }
+}
+
+@keyframes dreamy-float-reverse {
+    0%, 100% {
+        transform: translate3d(0, 0, 0) scale(1);
+        opacity: 0.25;
+    }
+    50% {
+        transform: translate3d(-35px, 35px, 0) scale(1.08);
+        opacity: 0.38;
+    }
+}
+
+.dreamy-nebula-1 {
+    animation: dreamy-float-slow 20s ease-in-out infinite;
+    will-change: transform, opacity;
+}
+
+.dreamy-nebula-2 {
+    animation: dreamy-float-reverse 26s ease-in-out infinite;
+    will-change: transform, opacity;
+}
+
 /* ── Selection colour ── */
 ::selection {
     background-color: #f7d340;
@@ -132,7 +196,10 @@
     opacity: 0;
     background: #f7d340;
     border-radius: 0.75rem;
-    box-shadow: 0 0 16px 2px rgba(247, 211, 64, 0.32);
+    box-shadow:
+        0 0 14px 2px rgba(247, 211, 64, 0.35),
+        0 0 32px 6px rgba(247, 211, 64, 0.18),
+        0 0 55px 12px rgba(247, 211, 64, 0.08);
     pointer-events: none;
     transform: translate3d(0, 0, 0);
     transform-origin: center center;
@@ -146,7 +213,10 @@
 }
 
 .filter-morph-pill.is-morphing {
-    box-shadow: 0 0 24px 5px rgba(247, 211, 64, 0.48);
+    box-shadow:
+        0 0 20px 4px rgba(247, 211, 64, 0.45),
+        0 0 45px 10px rgba(247, 211, 64, 0.25),
+        0 0 80px 18px rgba(247, 211, 64, 0.12);
 }
 
 .project-filter-tab[aria-selected="false"]:hover {
