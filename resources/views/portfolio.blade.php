@@ -219,26 +219,41 @@
                 </div>
 
                 <!-- Filter tabs -->
-                <div class="flex flex-wrap gap-2" role="tablist" aria-label="Kategori Proyek">
-                    @php
-                        $translatedTabs = [
-                            'all' => 'Semua Karya',
-                            'full-stack' => 'Aplikasi Web',
-                            'backend-api' => 'Backend & API',
-                            'dev-tool' => 'Alat & Utilitas',
-                        ];
-                    @endphp
-                    @foreach ($categories as $key => $label)
-                        <button type="button" role="tab"
-                                aria-selected="{{ $key === 'all' ? 'true' : 'false' }}"
-                                data-category="{{ $key }}"
-                                class="project-filter-tab min-h-[44px] rounded-xl px-4 py-2 text-xs font-semibold tracking-wide transition-all duration-200"
-                                style="{{ $key === 'all'
-                                    ? 'background:#f7d340;color:#0d0820;box-shadow:0 0 10px 1px rgba(247,211,64,0.22);'
-                                    : 'background:rgba(46,27,92,0.6);color:#c0a8e8;border:1px solid rgba(107,79,168,0.35);' }}">
-                            {{ $translatedTabs[$key] ?? $label }}
-                        </button>
-                    @endforeach
+                <div class="w-full md:w-auto">
+                    <div id="project-filter-tablist"
+                         class="project-filter-tablist relative grid grid-cols-2 sm:inline-flex sm:flex-row p-1.5 rounded-2xl border gap-1.5 w-full sm:w-auto"
+                         style="border-color:rgba(107,79,168,0.35);background:rgba(22,13,48,0.85);backdrop-filter:blur(12px);"
+                         role="tablist"
+                         aria-label="Kategori Proyek">
+
+                        <!-- Morphing active indicator ("the yellowed one") -->
+                        <div id="project-filter-pill"
+                             class="filter-morph-pill"
+                             aria-hidden="true"></div>
+
+                        @php
+                            $translatedTabs = [
+                                'all' => 'Semua Karya',
+                                'full-stack' => 'Aplikasi Web',
+                                'backend-api' => 'Backend & API',
+                                'dev-tool' => 'Alat & Utilitas',
+                            ];
+                        @endphp
+                        @foreach ($categories as $key => $label)
+                            <button type="button"
+                                    role="tab"
+                                    id="filter-tab-{{ $key }}"
+                                    aria-selected="{{ $key === 'all' ? 'true' : 'false' }}"
+                                    tabindex="{{ $key === 'all' ? '0' : '-1' }}"
+                                    data-category="{{ $key }}"
+                                    class="project-filter-tab group relative z-10 flex min-h-[44px] items-center justify-center rounded-xl px-4 py-2.5 text-xs font-semibold tracking-wide whitespace-nowrap transition-colors duration-200 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f7d340] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060412]"
+                                    style="{{ $key === 'all' ? 'color:#0d0820;font-weight:700;' : 'color:#c0a8e8;font-weight:600;' }}">
+                                <span class="tab-label pointer-events-none transition-transform duration-150 group-active:scale-95">
+                                    {{ $translatedTabs[$key] ?? $label }}
+                                </span>
+                            </button>
+                        @endforeach
+                    </div>
                 </div>
             </div>
 
