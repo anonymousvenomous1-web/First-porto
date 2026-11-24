@@ -1,57 +1,24 @@
-<?php
+<x-mail::message>
+# Halo Kikii, ada pesan baru dari pengunjung portfolio!
 
-namespace App\Mail;
+Seseorang baru saja mengirimkan pesan melalui formulir kontak di website portfolio kamu. Berikut detailnya:
 
-use App\Models\ContactMessage;
-use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Address;
-use Illuminate\Mail\Mailables\Attachment;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Queue\SerializesModels;
+<x-mail::panel>
+**Nama Pengirim:** {{ $contactMessage->name }}  
+**Alamat Email:** [{{ $contactMessage->email }}](mailto:{{ $contactMessage->email }})  
+**Subjek:** {{ $contactMessage->subject }}  
+**Waktu:** {{ $contactMessage->created_at?->format('d M Y, H:i') ?? now()->format('d M Y, H:i') }}
+</x-mail::panel>
 
-class ContactMessageReceived extends Mailable
-{
-    use Queueable, SerializesModels;
+### Isi Pesan:
+{{ $contactMessage->message }}
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct(
-        public ContactMessage $contactMessage
-    ) {}
+<x-mail::button :url="'mailto:'.$contactMessage->email">
+Balas ke {{ $contactMessage->name }}
+</x-mail::button>
 
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Pesan Baru dari Portfolio: '.$this->contactMessage->subject,
-            replyTo: [
-                new Address($this->contactMessage->email, $this->contactMessage->name),
-            ],
-        );
-    }
+*Catatan: Anda juga bisa langsung menekan tombol **Reply** di aplikasi Gmail Anda untuk membalas email ini.*
 
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            markdown: 'emails.contact-message',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
-    }
-}
+Salam hangat,<br>
+**Notifikasi Website Portfolio Kikii**
+</x-mail::message>
