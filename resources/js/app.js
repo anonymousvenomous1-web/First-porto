@@ -37,39 +37,167 @@ function initMobileNav() {
     });
 }
 
-/* ── Project Category Filters (R-26, R-27) ────────────────────────────── */
+/* ── Project Category Filters (Morphing Pill & Responsive Tabs) ───────── */
 function initProjectFilters() {
-    const tabs        = document.querySelectorAll('.project-filter-tab');
-    const cards       = document.querySelectorAll('.project-card');
-    const emptyState  = document.getElementById('projects-empty-state');
-    if (!tabs.length) return;
+    const tablist    = document.getElementById('project-filter-tablist');
+    const pill       = document.getElementById('project-filter-pill');
+    const tabs       = document.querySelectorAll('.project-filter-tab');
+    const cards      = document.querySelectorAll('.project-card');
+    const emptyState = document.getElementById('projects-empty-state');
+    if (!tablist || !tabs.length) return;
 
+    let activeTab = Array.from(tabs).find(t => t.getAttribute('aria-selected') === 'true') || tabs[0];
+    let morphTimeout = null;
+
+    function updatePill(tab, animate = true) {
+        if (!pill || !tab) return;
+
+        if (!animate) {
+            pill.style.transition = 'none';
+        } else {
+            pill.style.transition = '';
+            pill.classList.add('is-morphing');
+            clearTimeout(morphTimeout);
+            morphTimeout = setTimeout(() => {
+                pill.classList.remove('is-morphing');
+            }, 380);
+        }
+
+        const x = tab.offsetLeft;
+        const y = tab.offsetTop;
+        const w = tab.offsetWidth;
+        const h = tab.offsetHeight;
+
+        pill.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        pill.style.width = `${w}px`;
+        pill.style.height = `${h}px`;
+        pill.style.opacity = '1';
+
+        if (!animate) {
+            // Force browser reflow so position applies before CSS transition is restored
+            void pill.offsetHeight;
+            pill.style.transition = '';
+        }
+    }
+
+    function selectTab(tab, moveFocus = false) {
+        if (!tab) return;
+        activeTab = tab;
+        const cat = tab.dataset.category;
+
+        tabs.forEach(t => {
+            const isActive = t === tab;
+            t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            t.tabIndex = isActive ? 0 : -1;
+            if (isActive) {
+                t.style.color = '#0d0820';
+                t.style.fontWeight = '700';
+            } else {
+                t.style.color = '#c0a8e8';
+                t.style.fontWeight = '600';
+            }
+        });
+
+        if (moveFocus) {
+            tab.focus();
+        }
+
+        updatePill(tab, true);
+
+        // Filter project cards with smooth visual transitions
+        let visibleCount = 0;
+        cards.forEach(card => {
+            const match = cat === 'all' || card.dataset.category === cat;
+            if (match) {
+                visibleCount++;
+                card.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0) scale(1)';
+                });
+            } else {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(8px) scale(0.97)';
+                setTimeout(() => {
+                    if (card.dataset.category !== cat && cat !== 'all') {
+                        card.classList.add('hidden');
+                    }
+                }, 200);
+            }
+        });
+
+        if (emptyState) {
+            if (visibleCount === 0) {
+                emptyState.classList.remove('hidden');
+                requestAnimationFrame(() => {
+                    emptyState.style.opacity = '1';
+                });
+            } else {
+                emptyState.style.opacity = '0';
+                setTimeout(() => {
+                    emptyState.classList.add('hidden');
+                }, 200);
+            }
+        }
+    }
+
+    // Initial positioning without animation jump
+    updatePill(activeTab, false);
+
+    // Click handler on tabs
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            const cat = tab.dataset.category;
-
-            tabs.forEach(t => {
-                const active = t === tab;
-                t.setAttribute('aria-selected', active ? 'true' : 'false');
-                if (active) {
-                    t.classList.add('bg-gold-active', 'text-void', 'glow-gold-sm');
-                    t.classList.remove('bg-plum-inactive', 'text-plum-light');
-                } else {
-                    t.classList.remove('bg-gold-active', 'text-void', 'glow-gold-sm');
-                    t.classList.add('bg-plum-inactive', 'text-plum-light');
-                }
-            });
-
-            let visible = 0;
-            cards.forEach(card => {
-                const show = cat === 'all' || card.dataset.category === cat;
-                card.classList.toggle('hidden', !show);
-                if (show) visible++;
-            });
-
-            if (emptyState) emptyState.classList.toggle('hidden', visible > 0);
+            selectTab(tab);
         });
     });
+
+    // Keyboard navigation (WAI-ARIA tabs pattern: Left/Right/Home/End)
+    const tabArray = Array.from(tabs);
+    tablist.addEventListener('keydown', e => {
+        const index = tabArray.indexOf(activeTab);
+        if (index === -1) return;
+
+        let nextIndex = null;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            nextIndex = (index + 1) % tabArray.length;
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            nextIndex = (index - 1 + tabArray.length) % tabArray.length;
+        } else if (e.key === 'Home') {
+            e.preventDefault();
+            nextIndex = 0;
+        } else if (e.key === 'End') {
+            e.preventDefault();
+            nextIndex = tabArray.length - 1;
+        }
+
+        if (nextIndex !== null) {
+            selectTab(tabArray[nextIndex], true);
+        }
+    });
+
+    // Responsive adaptation: ResizeObserver on tablist container
+    if (window.ResizeObserver) {
+        const ro = new ResizeObserver(() => {
+            updatePill(activeTab, false);
+        });
+        ro.observe(tablist);
+    } else {
+        window.addEventListener('resize', () => {
+            updatePill(activeTab, false);
+        });
+    }
+
+    // Window load and fonts load check to ensure exact dimensions
+    window.addEventListener('load', () => {
+        updatePill(activeTab, false);
+    });
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+            updatePill(activeTab, false);
+        });
+    }
 }
 
 /* ── Project Modal (R-26, R-32, R-39) ─────────────────────────────────── */
