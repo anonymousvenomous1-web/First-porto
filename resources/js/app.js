@@ -1,6 +1,7 @@
-// Portfolio: Theme, mobile nav, project filters, project modal, contact form, scroll-reveal, parallax stars
+// Portfolio: Vesper entrance animations, mobile nav, project filters, project modal, contact form, scroll-reveal, monochrome parallax stars
 
 document.addEventListener('DOMContentLoaded', () => {
+    initVesperAppear();
     initParallaxStars();
     initMobileNav();
     initProjectFilters();
@@ -9,7 +10,31 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollReveal();
 });
 
-/* ── Mobile Navigation (R-03, R-32, R-39) ────────────────────────────── */
+/* ── Vesper entrance animation cleanup ───────────────────────── */
+function initVesperAppear() {
+    const items = document.querySelectorAll('.appear');
+
+    items.forEach(el => {
+        el.addEventListener('animationend', () => {
+            el.classList.add('is-in');
+        }, { once: true });
+    });
+
+    // Two-rAF fallback: if no animation started (e.g. prefers-reduced-motion or cached page), force final state
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            items.forEach(el => {
+                const anims = el.getAnimations ? el.getAnimations() : [];
+                const alive = anims.some(a => a.playState === 'running' || a.playState === 'finished');
+                if (!alive) {
+                    el.classList.add('is-in');
+                }
+            });
+        });
+    });
+}
+
+/* ── Mobile Navigation (Vesper overlay + R-03, R-32, R-39) ──────────── */
 function initMobileNav() {
     const btn  = document.getElementById('mobile-menu-btn');
     const menu = document.getElementById('mobile-menu');
@@ -17,24 +42,35 @@ function initMobileNav() {
 
     function open() {
         menu.classList.remove('hidden');
+        document.body.classList.add('menu-open');
         btn.setAttribute('aria-expanded', 'true');
+        btn.setAttribute('aria-label', 'Tutup menu navigasi');
         const first = menu.querySelector('a');
         if (first) first.focus();
     }
     function close() {
+        document.body.classList.remove('menu-open');
         menu.classList.add('hidden');
         btn.setAttribute('aria-expanded', 'false');
-        btn.focus();
+        btn.setAttribute('aria-label', 'Buka menu navigasi');
     }
 
     btn.addEventListener('click', () => {
-        btn.getAttribute('aria-expanded') === 'true' ? close() : open();
+        document.body.classList.contains('menu-open') ? close() : open();
     });
 
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
 
     document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && !menu.classList.contains('hidden')) close();
+        if (e.key === 'Escape' && document.body.classList.contains('menu-open')) {
+            close();
+            btn.focus();
+        }
+    });
+
+    const mq = window.matchMedia('(min-width: 768px)');
+    mq.addEventListener('change', e => {
+        if (e.matches && document.body.classList.contains('menu-open')) close();
     });
 }
 
@@ -75,7 +111,6 @@ function initProjectFilters() {
         pill.style.opacity = '1';
 
         if (!animate) {
-            // Force browser reflow so position applies before CSS transition is restored
             void pill.offsetHeight;
             pill.style.transition = '';
         }
@@ -90,13 +125,6 @@ function initProjectFilters() {
             const isActive = t === tab;
             t.setAttribute('aria-selected', isActive ? 'true' : 'false');
             t.tabIndex = isActive ? 0 : -1;
-            if (isActive) {
-                t.style.color = '#0d0820';
-                t.style.fontWeight = '700';
-            } else {
-                t.style.color = '#c0a8e8';
-                t.style.fontWeight = '600';
-            }
         });
 
         if (moveFocus) {
@@ -105,7 +133,6 @@ function initProjectFilters() {
 
         updatePill(tab, true);
 
-        // Filter project cards with smooth visual transitions
         let visibleCount = 0;
         cards.forEach(card => {
             const match = cat === 'all' || card.dataset.category === cat;
@@ -142,17 +169,14 @@ function initProjectFilters() {
         }
     }
 
-    // Initial positioning without animation jump
     updatePill(activeTab, false);
 
-    // Click handler on tabs
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             selectTab(tab);
         });
     });
 
-    // Keyboard navigation (WAI-ARIA tabs pattern: Left/Right/Home/End)
     const tabArray = Array.from(tabs);
     tablist.addEventListener('keydown', e => {
         const index = tabArray.indexOf(activeTab);
@@ -178,7 +202,6 @@ function initProjectFilters() {
         }
     });
 
-    // Responsive adaptation: ResizeObserver on tablist container
     if (window.ResizeObserver) {
         const ro = new ResizeObserver(() => {
             updatePill(activeTab, false);
@@ -190,7 +213,6 @@ function initProjectFilters() {
         });
     }
 
-    // Window load and fonts load check to ensure exact dimensions
     window.addEventListener('load', () => {
         updatePill(activeTab, false);
     });
@@ -203,7 +225,7 @@ function initProjectFilters() {
 
 /* ── Project Modal (R-26, R-32, R-39) ─────────────────────────────────── */
 function initProjectModal() {
-    const modal    = document.getElementById('project-modal');
+    const modal = document.getElementById('project-modal');
     if (!modal) return;
 
     const get = id => document.getElementById(id);
@@ -212,8 +234,8 @@ function initProjectModal() {
     function populateAndOpen(data) {
         lastFocus = document.activeElement;
 
-        get('modal-project-title').textContent    = data.title      || '';
-        get('modal-project-tagline').textContent  = data.tagline    || '';
+        get('modal-project-title').textContent    = data.title || '';
+        get('modal-project-tagline').textContent  = data.tagline || '';
         get('modal-project-category').textContent = data.categoryLabel || data.category || '';
 
         get('modal-project-description').textContent = data.description || '';
@@ -240,8 +262,8 @@ function initProjectModal() {
         featureList.innerHTML = '';
         (data.keyFeatures || []).forEach(f => {
             const li = document.createElement('li');
-            li.className = 'flex items-start gap-3 text-sm leading-relaxed text-purple-200';
-            li.innerHTML = `<span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-400 inline-block" aria-hidden="true"></span><span>${esc(f)}</span>`;
+            li.className = 'flex items-start gap-3 text-sm leading-relaxed text-[#d8d8d8]';
+            li.innerHTML = `<span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-white/70 inline-block" aria-hidden="true"></span><span>${esc(f)}</span>`;
             featureList.appendChild(li);
         });
 
@@ -249,7 +271,7 @@ function initProjectModal() {
         techWrap.innerHTML = '';
         (data.techStack || []).forEach(t => {
             const span = document.createElement('span');
-            span.className = 'inline-flex items-center rounded-lg border border-plum-600 bg-plum-800/60 px-3 py-1 font-mono text-xs text-plum-200';
+            span.className = 'tech-chip';
             span.textContent = t;
             techWrap.appendChild(span);
         });
@@ -306,10 +328,10 @@ function initContactForm() {
     const form = document.getElementById('contact-form');
     if (!form) return;
 
-    const submitBtn    = form.querySelector('button[type="submit"]');
-    const btnText      = document.getElementById('submit-btn-text');
-    const btnSpinner   = document.getElementById('submit-btn-spinner');
-    const statusBox    = document.getElementById('contact-form-status');
+    const submitBtn  = form.querySelector('button[type="submit"]');
+    const btnText    = document.getElementById('submit-btn-text');
+    const btnSpinner = document.getElementById('submit-btn-spinner');
+    const statusBox  = document.getElementById('contact-form-status');
 
     function clearErrors() {
         form.querySelectorAll('[data-error-feedback]').forEach(el => {
@@ -317,7 +339,7 @@ function initContactForm() {
             el.classList.add('hidden');
         });
         form.querySelectorAll('input, textarea').forEach(el => {
-            el.classList.remove('border-red-500');
+            el.classList.remove('error');
         });
         if (statusBox) { statusBox.className = 'hidden'; statusBox.textContent = ''; }
     }
@@ -325,8 +347,8 @@ function initContactForm() {
     function showStatus(msg, ok = true) {
         if (!statusBox) return;
         statusBox.className = ok
-            ? 'mb-6 rounded-xl border border-emerald-500/30 bg-emerald-900/20 p-4 text-sm font-medium text-emerald-300'
-            : 'mb-6 rounded-xl border border-red-500/30 bg-red-900/20 p-4 text-sm font-medium text-red-300';
+            ? 'mb-6 rounded-lg border border-emerald-500/30 bg-emerald-900/20 p-4 text-sm font-medium text-emerald-300'
+            : 'mb-6 rounded-lg border border-red-500/30 bg-red-900/20 p-4 text-sm font-medium text-red-300';
         statusBox.textContent = msg;
         statusBox.focus();
     }
@@ -355,7 +377,7 @@ function initContactForm() {
                     const fb    = form.querySelector(`[data-error-feedback="${field}"]`);
                     const input = form.querySelector(`[name="${field}"]`);
                     if (fb) { fb.textContent = msgs[0]; fb.classList.remove('hidden'); }
-                    if (input) input.classList.add('border-red-500');
+                    if (input) input.classList.add('error');
                 });
                 showStatus('Mohon periksa kembali kolom isian yang ditandai merah di atas.', false);
             } else {
@@ -371,7 +393,7 @@ function initContactForm() {
     });
 }
 
-/* ── Scroll Reveal (MOTION 2 - R-19: purpose = guide attention on entry) ─ */
+/* ── Scroll Reveal ────────────────────────────────────────────────────── */
 function initScrollReveal() {
     const items = document.querySelectorAll('.reveal');
     if (!items.length) return;
@@ -395,7 +417,7 @@ function esc(str) {
         .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
 }
 
-/* ── Celestial Parallax Stars Background ────────────────────────────────── */
+/* ── Monochrome Starlight Parallax Background ─────────────────────────── */
 function initParallaxStars() {
     const canvas = document.getElementById('parallax-stars-canvas');
     if (!canvas) return;
@@ -418,15 +440,14 @@ function initParallaxStars() {
     let targetMouseX = 0;
     let targetMouseY = 0;
 
-    // Density based on viewport width: ~140 on mobile up to 280 on widescreen
-    const STAR_COUNT = Math.min(280, Math.max(140, Math.floor(window.innerWidth / 5.5)));
+    const STAR_COUNT = Math.min(220, Math.max(110, Math.floor(window.innerWidth / 6.5)));
 
+    // Vesper monochrome starlight palette
     const STAR_COLORS = [
-        { r: 250, g: 225, b: 120 }, // Warm Starlight Gold
-        { r: 192, g: 132, b: 252 }, // Dreamy Celestial Violet
-        { r: 165, g: 180, b: 252 }, // Ethereal Cyan / Periwinkle
-        { r: 255, g: 255, b: 255 }, // Pure Radiant White
-        { r: 247, g: 211, b: 64 },  // Luminous Gold Accent
+        { r: 255, g: 255, b: 255 },
+        { r: 216, g: 216, b: 216 },
+        { r: 200, g: 210, b: 230 },
+        { r: 170, g: 185, b: 215 },
     ];
 
     function resize() {
@@ -444,35 +465,30 @@ function initParallaxStars() {
     }
 
     function createStar() {
-        // Distribute across 3 depth layers
         const rand = Math.random();
         let layer = 1;
-        let baseRadius = 0.65;
-        let speedMultiplier = 0.12;
-        let parallaxFactor = 0.05;
+        let baseRadius = 0.6;
+        let speedMultiplier = 0.1;
+        let parallaxFactor = 0.04;
 
-        if (rand > 0.82) {
-            // Layer 3: Foreground gem star (bright, soft dreamy bloom halo)
+        if (rand > 0.84) {
             layer = 3;
-            baseRadius = 1.6 + Math.random() * 0.9;
-            speedMultiplier = 0.35 + Math.random() * 0.18;
-            parallaxFactor = 0.32;
+            baseRadius = 1.4 + Math.random() * 0.7;
+            speedMultiplier = 0.28 + Math.random() * 0.14;
+            parallaxFactor = 0.28;
         } else if (rand > 0.45) {
-            // Layer 2: Mid-ground star
             layer = 2;
-            baseRadius = 1.0 + Math.random() * 0.55;
-            speedMultiplier = 0.2 + Math.random() * 0.12;
-            parallaxFactor = 0.15;
+            baseRadius = 0.9 + Math.random() * 0.45;
+            speedMultiplier = 0.16 + Math.random() * 0.1;
+            parallaxFactor = 0.12;
         } else {
-            // Layer 1: Distant stardust
             layer = 1;
-            baseRadius = 0.5 + Math.random() * 0.45;
-            speedMultiplier = 0.08 + Math.random() * 0.07;
-            parallaxFactor = 0.05;
+            baseRadius = 0.45 + Math.random() * 0.4;
+            speedMultiplier = 0.06 + Math.random() * 0.06;
+            parallaxFactor = 0.04;
         }
 
         const color = STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)];
-        // Slight drift vector: gently drifting upwards and slightly to the right
         const angle = -Math.PI / 2 + (Math.random() - 0.45) * 0.6;
         const speed = prefersReducedMotion ? 0 : speedMultiplier;
 
@@ -485,11 +501,11 @@ function initParallaxStars() {
             vx: Math.cos(angle) * speed,
             vy: Math.sin(angle) * speed,
             parallaxFactor,
-            baseAlpha: layer === 3 ? 0.75 : layer === 2 ? 0.5 : 0.28,
+            baseAlpha: layer === 3 ? 0.65 : layer === 2 ? 0.42 : 0.22,
             twinklePhase: Math.random() * Math.PI * 2,
-            twinkleSpeed: 0.015 + Math.random() * 0.035,
-            twinkleAmp: 0.18 + Math.random() * 0.22,
-            isSparkle: layer === 3 && Math.random() > 0.45,
+            twinkleSpeed: 0.012 + Math.random() * 0.025,
+            twinkleAmp: 0.14 + Math.random() * 0.18,
+            isSparkle: layer === 3 && Math.random() > 0.55,
         };
     }
 
@@ -500,7 +516,6 @@ function initParallaxStars() {
         }
     }
 
-    // Passive listeners for fluid parallax response
     window.addEventListener('scroll', () => {
         targetScrollY = window.scrollY || 0;
     }, { passive: true });
@@ -512,9 +527,9 @@ function initParallaxStars() {
 
     function drawSparkleCross(cx, cy, radius, alpha, rgb) {
         ctx.save();
-        ctx.strokeStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha * 0.75})`;
-        ctx.lineWidth = 0.75;
-        const arm = radius * 3.2;
+        ctx.strokeStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha * 0.6})`;
+        ctx.lineWidth = 0.7;
+        const arm = radius * 3.0;
 
         ctx.beginPath();
         ctx.moveTo(cx - arm, cy);
@@ -526,7 +541,6 @@ function initParallaxStars() {
     }
 
     function render() {
-        // Smoothly interpolate scroll and mouse parallax
         scrollY += (targetScrollY - scrollY) * 0.07;
         mouseX += (targetMouseX - mouseX) * 0.05;
         mouseY += (targetMouseY - mouseY) * 0.05;
@@ -536,25 +550,20 @@ function initParallaxStars() {
         for (let i = 0; i < stars.length; i++) {
             const s = stars[i];
 
-            // Continuous drift motion
             s.x += s.vx;
             s.y += s.vy;
 
-            // Infinite boundary wrapping
             if (s.x < -20) s.x = width + 20;
             if (s.x > width + 20) s.x = -20;
             if (s.y < -20) s.y = height + 20;
             if (s.y > height + 20) s.y = -20;
 
-            // Twinkle oscillation
             s.twinklePhase += s.twinkleSpeed;
-            const currentAlpha = Math.max(0.1, Math.min(1, s.baseAlpha + Math.sin(s.twinklePhase) * s.twinkleAmp));
+            const currentAlpha = Math.max(0.08, Math.min(0.95, s.baseAlpha + Math.sin(s.twinklePhase) * s.twinkleAmp));
 
-            // Parallax offset based on depth layer
-            const parallaxX = mouseX * 20 * s.parallaxFactor;
-            const parallaxY = -(scrollY * s.parallaxFactor * 0.35) + (mouseY * 20 * s.parallaxFactor);
+            const parallaxX = mouseX * 18 * s.parallaxFactor;
+            const parallaxY = -(scrollY * s.parallaxFactor * 0.35) + (mouseY * 18 * s.parallaxFactor);
 
-            // Calculate rendered position with wrapping
             let drawX = (s.x + parallaxX) % width;
             if (drawX < 0) drawX += width;
             let drawY = (s.y + parallaxY) % height;
@@ -562,36 +571,32 @@ function initParallaxStars() {
 
             const rgb = s.color;
 
-            // Soft dreamy glow halo for layer 2 & 3 stars
             if (s.layer === 3) {
-                // Layer 3: Dreamy ambient halo bloom
-                const grad = ctx.createRadialGradient(drawX, drawY, 0, drawX, drawY, s.radius * 3.6);
-                grad.addColorStop(0, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha * 0.9})`);
-                grad.addColorStop(0.35, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha * 0.32})`);
+                const grad = ctx.createRadialGradient(drawX, drawY, 0, drawX, drawY, s.radius * 3.2);
+                grad.addColorStop(0, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha * 0.8})`);
+                grad.addColorStop(0.35, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha * 0.25})`);
                 grad.addColorStop(1, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0)`);
 
                 ctx.fillStyle = grad;
                 ctx.beginPath();
-                ctx.arc(drawX, drawY, s.radius * 3.6, 0, Math.PI * 2);
+                ctx.arc(drawX, drawY, s.radius * 3.2, 0, Math.PI * 2);
                 ctx.fill();
 
                 if (s.isSparkle) {
                     drawSparkleCross(drawX, drawY, s.radius, currentAlpha, rgb);
                 }
             } else if (s.layer === 2) {
-                // Layer 2: Subtle soft bloom
-                const grad = ctx.createRadialGradient(drawX, drawY, 0, drawX, drawY, s.radius * 2.2);
-                grad.addColorStop(0, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha * 0.85})`);
-                grad.addColorStop(0.5, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha * 0.2})`);
+                const grad = ctx.createRadialGradient(drawX, drawY, 0, drawX, drawY, s.radius * 2.0);
+                grad.addColorStop(0, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha * 0.75})`);
+                grad.addColorStop(0.5, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha * 0.16})`);
                 grad.addColorStop(1, `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0)`);
 
                 ctx.fillStyle = grad;
                 ctx.beginPath();
-                ctx.arc(drawX, drawY, s.radius * 2.2, 0, Math.PI * 2);
+                ctx.arc(drawX, drawY, s.radius * 2.0, 0, Math.PI * 2);
                 ctx.fill();
             }
 
-            // Central starlight core
             ctx.fillStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${currentAlpha})`;
             ctx.beginPath();
             ctx.arc(drawX, drawY, s.radius * 0.85, 0, Math.PI * 2);
@@ -601,7 +606,6 @@ function initParallaxStars() {
         animationFrameId = requestAnimationFrame(render);
     }
 
-    // Auto-pause animation when tab is inactive to preserve battery and CPU
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
             if (animationFrameId) cancelAnimationFrame(animationFrameId);

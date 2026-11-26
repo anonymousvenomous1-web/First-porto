@@ -4,229 +4,196 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Portofolio Kikii - Full-Stack Web Developer yang berfokus pada arsitektur sistem yang tangguh, API berkinerja tinggi, dan antarmuka web modern yang responsif.">
-    <title>Kikii | Full-Stack Web Developer</title>
-    <link rel="preconnect" href="https://fonts.bunny.net">
+    <title>Kikii — Full-Stack Web Developer</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cg transform='rotate(-30 12 12)'%3E%3Ccircle cx='7.3' cy='3.2' r='1.45'/%3E%3Crect x='5.5' y='4.7' width='3.6' height='14.6' rx='1.8'/%3E%3Crect x='14.9' y='4.7' width='3.6' height='14.6' rx='1.8'/%3E%3Ccircle cx='16.7' cy='20.8' r='1.45'/%3E%3C/g%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    {{-- Inline critical: prevent flash of unstyled void background --}}
+    {{-- Inline critical: prevent flash of unstyled background --}}
     <style>
-        :root { background: #060412; color: #e9e0ff; }
+        html, body { background: #000000 !important; color: #ffffff; }
     </style>
 </head>
 
-<body class="antialiased min-h-screen" style="background:#060412;color:#e9e0ff;">
+<body class="antialiased min-h-screen" style="background:#000000;color:#ffffff;">
 
-    <!-- ━━━ CELESTIAL BACKGROUND: PARALLAX STARS & DREAMY NEBULAS ━━━ -->
-    <div class="pointer-events-none fixed inset-0 overflow-hidden z-0" aria-hidden="true">
-        <!-- Parallax Stars Canvas -->
-        <canvas id="parallax-stars-canvas" class="absolute inset-0 h-full w-full"></canvas>
+    <!-- ━━━ VESPER GRAIN OVERLAY ━━━ -->
+    <div class="grain" aria-hidden="true"></div>
 
-        <!-- Dreamy Soft Light Nebulas -->
-        <div class="dreamy-nebula-1 absolute -top-40 left-1/2 -translate-x-1/2 w-[1100px] h-[750px] rounded-full pointer-events-none"
-             style="background:radial-gradient(ellipse at center, rgba(107,79,168,0.32) 0%, rgba(79,51,138,0.18) 42%, transparent 75%);filter:blur(85px);mix-blend-mode:screen;"></div>
-
-        <div class="dreamy-nebula-2 absolute top-1/3 -left-52 w-[800px] h-[800px] rounded-full pointer-events-none"
-             style="background:radial-gradient(circle, rgba(192,132,252,0.18) 0%, rgba(46,27,92,0.1) 48%, transparent 75%);filter:blur(95px);mix-blend-mode:screen;"></div>
-
-        <div class="dreamy-nebula-1 absolute top-2/3 -right-48 w-[850px] h-[850px] rounded-full pointer-events-none"
-             style="background:radial-gradient(circle, rgba(247,211,64,0.12) 0%, rgba(107,79,168,0.14) 45%, transparent 75%);filter:blur(105px);mix-blend-mode:screen;"></div>
-
-        <div class="dreamy-nebula-2 absolute bottom-0 left-1/4 w-[900px] h-[700px] rounded-full pointer-events-none"
-             style="background:radial-gradient(ellipse, rgba(147,112,219,0.16) 0%, rgba(22,13,48,0.08) 50%, transparent 75%);filter:blur(90px);mix-blend-mode:screen;"></div>
+    <!-- ━━━ REFERENCE-STYLE VIDEO BACKGROUND ━━━ -->
+    <div class="hero-photo" aria-hidden="true">
+        <video autoplay muted loop playsinline preload="auto" width="1920" height="1080" fetchpriority="high">
+            <source src="{{ asset('videos/vesper-background.mp4') }}" type="video/mp4">
+        </video>
     </div>
 
-    <!-- ━━━ HEADER ━━━ -->
-    <header class="sticky top-0 z-40 w-full" style="border-bottom:1px solid rgba(107,79,168,0.3);background:rgba(6,4,18,0.85);backdrop-filter:blur(16px);">
-        <div class="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <div class="menu-backdrop" aria-hidden="true"></div>
 
-            <!-- Brand -->
-            <a href="{{ route('portfolio.index') }}" class="group flex items-center gap-3" aria-label="Halaman Beranda Portofolio Kikii">
-                <span class="flex h-10 w-10 items-center justify-center rounded-xl font-mono text-sm font-black"
-                      style="background:linear-gradient(135deg,#4f338a 0%,#f7d340 100%);color:#060412;letter-spacing:-0.02em;">
-                    K
-                </span>
-                <span class="flex flex-col">
-                    <span class="text-sm font-bold tracking-tight" style="color:#e9e0ff;">Kikii</span>
-                    <span class="font-mono text-[10px]" style="color:#9270d0;">Full-Stack Developer</span>
-                </span>
+    <!-- ━━━ VESPER 1:1 FIRST-VIEWPORT SHELL (Header + Bottom-Centered Hero + Bottom Stats) ━━━ -->
+    <div class="vsp-viewport">
+        <!-- Header -->
+        <header class="vsp-header">
+            <!-- Left: Brand -->
+            <a href="{{ route('portfolio.index') }}" class="vsp-logo appear appear--scale d1" aria-label="Halaman Beranda Portofolio Kikii">
+                <svg class="vsp-logo-mark" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <g transform="rotate(-30 12 12)">
+                        <circle cx="7.3" cy="3.2" r="1.45"/>
+                        <rect x="5.5" y="4.7" width="3.6" height="14.6" rx="1.8"/>
+                        <rect x="14.9" y="4.7" width="3.6" height="14.6" rx="1.8"/>
+                        <circle cx="16.7" cy="20.8" r="1.45"/>
+                    </g>
+                </svg>
+                <span>Kikii<span class="font-normal text-[#9a9a9a]">.dev</span></span>
             </a>
 
-            <!-- Desktop Nav -->
-            <nav aria-label="Navigasi Utama" class="hidden md:flex md:items-center md:gap-7">
+            <!-- Center: Liquid-metal nav pills -->
+            <nav id="site-nav" aria-label="Navigasi Utama" class="hidden md:flex md:items-center md:gap-2 md:justify-self-center">
+                @php $navDelays = ['projects' => 'd2', 'architecture' => 'd3', 'experience' => 'd4', 'contact' => 'd5']; @endphp
                 @foreach (['projects' => 'Proyek', 'architecture' => 'Keahlian', 'experience' => 'Pengalaman', 'contact' => 'Kontak'] as $anchor => $label)
                     <a href="#{{ $anchor }}"
-                       class="text-sm font-medium transition-colors duration-150"
-                       style="color:#c0a8e8;"
-                       onmouseover="this.style.color='#f7d340'"
-                       onmouseout="this.style.color='#c0a8e8'">
+                       class="nav-pill appear appear--scale {{ $navDelays[$anchor] ?? '' }}">
                         {{ $label }}
                     </a>
                 @endforeach
             </nav>
 
-            <!-- Controls -->
-            <div class="flex items-center gap-3">
-                <!-- CTA -->
-                <a href="#contact"
-                   class="hidden sm:inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 active:scale-95"
-                   style="background:#f7d340;color:#0d0820;"
-                   onmouseover="this.style.background='#ffe033';this.style.boxShadow='0 0 18px 2px rgba(247,211,64,0.4)'"
-                   onmouseout="this.style.background='#f7d340';this.style.boxShadow='none'">
+            <!-- Right: CTA + Burger -->
+            <div class="flex items-center gap-3 justify-self-end">
+                <a href="#contact" class="vsp-header-cta btn btn-solid hidden md:inline-flex appear appear--scale d6" style="height:40px;min-height:40px;padding:0 16px;border-radius:6px;">
                     Hubungi Saya
                 </a>
 
-                <!-- Mobile menu toggle -->
                 <button id="mobile-menu-btn" type="button"
                         aria-expanded="false" aria-controls="mobile-menu"
                         aria-label="Buka menu navigasi"
-                        class="flex h-11 w-11 items-center justify-center rounded-xl border md:hidden"
-                        style="border-color:rgba(107,79,168,0.5);background:rgba(46,27,92,0.5);color:#c0a8e8;">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
+                        class="vsp-burger md:hidden">
+                    <span class="flex flex-col gap-[5px]" aria-hidden="true">
+                        <span class="burger-bar"></span>
+                        <span class="burger-bar"></span>
+                        <span class="burger-bar"></span>
+                    </span>
                 </button>
             </div>
-        </div>
+        </header>
 
-        <!-- Mobile Drawer -->
-        <div id="mobile-menu" class="hidden border-t md:hidden" style="border-color:rgba(107,79,168,0.3);background:rgba(13,8,32,0.97);">
-            <nav class="flex flex-col px-4 py-5 gap-1" aria-label="Navigasi Seluler">
-                @foreach (['projects' => 'Proyek', 'architecture' => 'Keahlian', 'experience' => 'Pengalaman', 'contact' => 'Kontak'] as $anchor => $label)
-                    <a href="#{{ $anchor }}"
-                       class="flex h-12 items-center rounded-xl px-4 text-base font-medium transition-colors"
-                       style="color:#c0a8e8;"
-                       onmouseover="this.style.background='rgba(79,51,138,0.4)';this.style.color='#f7d340'"
-                       onmouseout="this.style.background='transparent';this.style.color='#c0a8e8'">
-                        {{ $label }}
+        <!-- Bottom-Centered Hero -->
+        <section id="top" class="vsp-hero">
+            <div class="vsp-hero-copy">
+                <!-- Badge -->
+                <div class="vsp-badge appear appear--pop d7">
+                    <svg class="vsp-badge-sparkle" width="18" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                        <path d="M12 2.6C12.55 2.6 12.88 3.15 13.08 4.7c.62 4.7 1.52 5.6 6.22 6.22 1.55.2 2.1.53 2.1 1.08s-.55.88-2.1 1.08c-4.7.62-5.6 1.52-6.22 6.22-.2 1.55-.53 2.1-1.08 2.1s-.88-.55-1.08-2.1c-.62-4.7-1.52-5.6-6.22-6.22C3.15 12.88 2.6 12.55 2.6 12s.55-.88 2.1-1.08c4.7-.62 5.6-1.52 6.22-6.22C11.12 3.15 11.45 2.6 12 2.6Z"/>
+                    </svg>
+                    Terbuka untuk Peluang Kerja &amp; Kolaborasi Proyek
+                </div>
+
+                <!-- H1 -->
+                <h1>
+                    <span class="block appear appear--mask d8">Selamat datang, wahai</span>
+                    <span class="block appear appear--mask d9"><em class="vsp-serif">Kikiawan &amp; Kikiawati</em></span>
+                </h1>
+
+                <!-- Lede -->
+                <p class="vsp-lede appear appear--soft d9">
+                    Halo! Saya Kikii, seorang Full-Stack Developer yang merancang aplikasi web yang rapi, cepat, dan mudah dipelihara dengan Laravel, PHP, serta JavaScript modern.
+                </p>
+
+                <!-- Actions -->
+                <div class="vsp-hero-actions">
+                    <a href="#projects" class="btn btn-solid appear appear--btn d10">
+                        Lihat Hasil Karya
                     </a>
-                @endforeach
-            </nav>
+                    <a href="#contact" class="btn btn-ghost appear appear--btn d11">
+                        Mari Berkolaborasi
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom-Left 3-Stat Strip -->
+        <div class="vsp-stats">
+            <div class="vsp-stat appear appear--stat d12">
+                <svg width="44" height="22" viewBox="0 0 44 22" fill="none" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="sg1a" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="#555"/>
+                            <stop offset="100%" stop-color="#222"/>
+                        </linearGradient>
+                        <linearGradient id="sg1b" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="#aaa"/>
+                            <stop offset="100%" stop-color="#666"/>
+                        </linearGradient>
+                    </defs>
+                    <rect x="0" y="3" width="20" height="16" rx="8" fill="url(#sg1a)"/>
+                    <rect x="24" y="3" width="20" height="16" rx="8" fill="url(#sg1b)"/>
+                </svg>
+                <div class="flex flex-col gap-0.5">
+                    <span class="vsp-stat-label">Arsitektur Modular</span>
+                    <span class="text-[11px] text-[#9a9a9a]">Bersih &amp; mudah dikembangkan</span>
+                </div>
+            </div>
+
+            <div class="vsp-stat appear appear--stat d13">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+                    <rect width="22" height="22" rx="5" fill="#fff" fill-opacity="0.9"/>
+                    <path d="M11 5.5v7m0 0l-3-3m3 3l3-3" stroke="#111" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M6 15.5h10" stroke="#111" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                <div class="flex flex-col gap-0.5">
+                    <span class="vsp-stat-label">Performa Terukur</span>
+                    <span class="text-[11px] text-[#9a9a9a]">Query efisien &amp; caching Redis</span>
+                </div>
+            </div>
+
+            <div class="vsp-stat appear appear--stat d14">
+                <svg width="44" height="22" viewBox="0 0 44 22" fill="none" aria-hidden="true">
+                    <circle cx="8" cy="11" r="9" fill="#2a2a2a" stroke="#000" stroke-width="1"/>
+                    <circle cx="8" cy="8.5" r="3" fill="#555"/>
+                    <ellipse cx="8" cy="16" rx="5" ry="3.5" fill="#444"/>
+                    <circle cx="22" cy="11" r="9" fill="#e8e8e8" stroke="#000" stroke-width="1"/>
+                    <circle cx="22" cy="8.5" r="3" fill="#aaa"/>
+                    <ellipse cx="22" cy="16" rx="5" ry="3.5" fill="#bbb"/>
+                    <circle cx="36" cy="11" r="9" fill="#525252" stroke="#000" stroke-width="1"/>
+                    <circle cx="36" cy="8.5" r="3" fill="#888"/>
+                    <ellipse cx="36" cy="16" rx="5" ry="3.5" fill="#666"/>
+                </svg>
+                <div class="flex flex-col gap-0.5">
+                    <span class="vsp-stat-label">Siap Produksi</span>
+                    <span class="text-[11px] text-[#9a9a9a]">Teruji PHPUnit &amp; standar PSR-12</span>
+                </div>
+            </div>
         </div>
-    </header>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden" aria-label="Navigasi Seluler">
+        <nav class="flex flex-col items-center gap-3 w-full max-w-xs">
+            @foreach (['projects' => 'Proyek', 'architecture' => 'Keahlian', 'experience' => 'Pengalaman', 'contact' => 'Kontak'] as $anchor => $label)
+                <a href="#{{ $anchor }}" class="nav-pill w-full justify-center" style="height:48px;font-size:15px;">
+                    {{ $label }}
+                </a>
+            @endforeach
+            <a href="#contact" class="btn btn-solid w-full mt-2" style="height:46px;">
+                Hubungi Saya
+            </a>
+        </nav>
+    </div>
 
     <main id="main-content" class="relative z-10">
 
-    <!-- ━━━ HERO ━━━ -->
-    <section class="relative overflow-hidden pt-16 pb-24 md:pt-24 md:pb-32">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 items-center gap-14 lg:grid-cols-12">
-
-                <!-- Left column -->
-                <div class="lg:col-span-7 reveal">
-                    <!-- Availability indicator -->
-                    <div class="mb-6 inline-flex items-center gap-2.5 rounded-lg border px-3.5 py-1.5 text-xs font-mono font-semibold"
-                         style="border-color:rgba(247,211,64,0.3);background:rgba(247,211,64,0.08);color:#f7d340;">
-                        <span class="relative flex h-2 w-2">
-                            <span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style="background:#f7d340;animation-duration:2.4s;"></span>
-                            <span class="relative inline-flex h-2 w-2 rounded-full" style="background:#f7d340;"></span>
-                        </span>
-                        Terbuka untuk Peluang Kerja &amp; Kolaborasi Proyek
-                    </div>
-
-                    <!-- H1 -->
-                    <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl" style="color:#f0ebff;line-height:1.15;">
-                        Selamat datang, wahai
-                        <span class="relative block sm:inline">
-                            <span style="color:#f7d340;">Kikiawan dan Kikiawati!</span>
-                        </span>
-                        <br><span class="text-2xl sm:text-3xl lg:text-4xl font-medium" style="color:#c0a8e8;">Silakan menikmati portofolio singkat ini ^_^</span>
-                    </h1>
-
-                    <p class="mt-6 max-w-xl text-lg leading-relaxed" style="color:#a89bc2;">
-                        Halo! Saya <strong style="color:#f0ebff;">Kikii</strong>, seorang Full-Stack Developer yang berfokus merancang aplikasi web yang rapi, cepat, dan mudah dipelihara. Mengembangkan solusi digital menggunakan ekosistem <strong style="color:#f7d340;">Laravel</strong>, <strong style="color:#f7d340;">PHP</strong>, serta JavaScript modern dengan arsitektur data yang terstruktur.
-                    </p>
-
-                    <!-- CTAs -->
-                    <div class="mt-9 flex flex-wrap items-center gap-4">
-                        <a href="#projects"
-                           class="inline-flex min-h-[44px] items-center justify-center rounded-xl px-6 py-3 text-base font-semibold transition-all duration-200 active:scale-95"
-                           style="background:#f7d340;color:#0d0820;"
-                           onmouseover="this.style.background='#ffe033';this.style.boxShadow='0 0 22px 3px rgba(247,211,64,0.45)'"
-                           onmouseout="this.style.background='#f7d340';this.style.boxShadow='none'">
-                            Lihat Hasil Karya
-                        </a>
-                        <a href="#contact"
-                           class="inline-flex min-h-[44px] items-center justify-center rounded-xl border px-6 py-3 text-base font-semibold transition-all duration-200"
-                           style="border-color:rgba(107,79,168,0.6);color:#c0a8e8;"
-                           onmouseover="this.style.borderColor='rgba(192,132,252,0.7)';this.style.color='#e9e0ff';this.style.background='rgba(79,51,138,0.2)'"
-                           onmouseout="this.style.borderColor='rgba(107,79,168,0.6)';this.style.color='#c0a8e8';this.style.background='transparent'">
-                            Mari Berkolaborasi
-                        </a>
-                    </div>
-
-                    <!-- Stack chips -->
-                    <div class="mt-10 border-t pt-6" style="border-color:rgba(107,79,168,0.25);">
-                        <p class="mb-3 font-mono text-xs font-semibold uppercase tracking-widest" style="color:#9270d0;">Teknologi Utama</p>
-                        <div class="flex flex-wrap gap-2">
-                            @foreach (['Laravel 12', 'PHP 8.5', 'PostgreSQL / MySQL', 'Redis Streams', 'Tailwind CSS', 'JavaScript & Alpine.js', 'Docker'] as $tech)
-                                <span class="rounded-lg border px-3 py-1 font-mono text-xs"
-                                      style="border-color:rgba(107,79,168,0.4);background:rgba(46,27,92,0.5);color:#c0a8e8;">
-                                    {{ $tech }}
-                                </span>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right: Spec card -->
-                <div class="lg:col-span-5 reveal reveal-delay-2">
-                    <div class="rounded-2xl border p-6"
-                         style="border-color:rgba(107,79,168,0.4);background:rgba(22,13,48,0.8);box-shadow:0 0 48px 4px rgba(107,79,168,0.12);">
-                        <div class="flex items-center justify-between border-b pb-4" style="border-color:rgba(107,79,168,0.25);">
-                            <div class="flex gap-1.5">
-                                @foreach (['#c0a8e8', '#6b4fa8', '#2e1b5c'] as $dot)
-                                    <span class="h-3 w-3 rounded-full" style="background:{{ $dot }};" aria-hidden="true"></span>
-                                @endforeach
-                            </div>
-                            <span class="font-mono text-xs" style="color:#6b4fa8;">ringkasan_sistem.json</span>
-                        </div>
-
-                        <div class="mt-5 space-y-4 font-mono text-sm">
-                            <div class="rounded-xl p-4" style="background:rgba(6,4,18,0.7);">
-                                <span style="color:#f7d340;" class="font-semibold">$ cek_arsitektur --rinci</span>
-                                <p class="mt-1.5 text-xs leading-relaxed" style="color:#9270d0;">
-                                    Struktur aplikasi modular, antrean latar belakang yang efisien, dan pengecekan tipe kode yang ketat untuk menjaga keandalan sistem.
-                                </p>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-3">
-                                <div class="rounded-xl border p-3.5" style="border-color:rgba(107,79,168,0.3);background:rgba(22,13,48,0.6);">
-                                    <span class="text-xs" style="color:#9270d0;">Pengujian Kode</span>
-                                    <p class="mt-1 text-sm font-bold" style="color:#e9e0ff;">PHPUnit Suite</p>
-                                    <p class="mt-0.5 text-[11px]" style="color:#c0a8e8;">Feature &amp; Unit Test</p>
-                                </div>
-                                <div class="rounded-xl border p-3.5" style="border-color:rgba(107,79,168,0.3);background:rgba(22,13,48,0.6);">
-                                    <span class="text-xs" style="color:#9270d0;">Standar Kode</span>
-                                    <p class="mt-1 text-sm font-bold" style="color:#e9e0ff;">PSR-12 / Pint</p>
-                                    <p class="mt-0.5 text-[11px]" style="color:#c0a8e8;">Strict types aktif</p>
-                                </div>
-                            </div>
-
-                            <div class="rounded-xl border p-3.5" style="border-color:rgba(107,79,168,0.3);background:rgba(22,13,48,0.6);">
-                                <span class="text-xs" style="color:#9270d0;">Lingkungan Kerja</span>
-                                <p class="mt-1 text-xs" style="color:#c0a8e8;">
-                                    PHP 8.5 &nbsp;|&nbsp; Laravel 12 &nbsp;|&nbsp; MySQL / SQLite &nbsp;|&nbsp; Vite Pipeline
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
     <!-- ━━━ PROJECTS ━━━ -->
-    <section id="projects" class="border-t py-20" style="border-color:rgba(107,79,168,0.2);background:rgba(13,8,32,0.6);">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="projects" class="section-divider py-20" style="background:rgba(255,255,255,0.015);">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
 
             <!-- Section header -->
             <div class="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6">
                 <div>
-                    <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl" style="color:#f0ebff;">
-                        Karya &amp; Proyek Pilihan
+                    <h2 class="text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
+                        Karya &amp; <em class="vsp-serif font-normal">Proyek</em> Pilihan
                     </h2>
-                    <p class="mt-3 max-w-xl text-base" style="color:#9270d0;">
+                    <p class="mt-3 max-w-xl text-[15px] text-[#9a9a9a]">
                         Kumpulan aplikasi web nyata, integrasi sistem, dan karya digital yang dibangun dengan perhatian pada kualitas performa dan estetika.
                     </p>
                 </div>
@@ -234,12 +201,12 @@
                 <!-- Filter tabs -->
                 <div class="w-full md:w-auto">
                     <div id="project-filter-tablist"
-                         class="project-filter-tablist relative grid grid-cols-2 sm:inline-flex sm:flex-row p-1.5 rounded-2xl border gap-1.5 w-full sm:w-auto"
-                         style="border-color:rgba(107,79,168,0.35);background:rgba(22,13,48,0.85);backdrop-filter:blur(12px);"
+                         class="project-filter-tablist relative grid grid-cols-2 sm:inline-flex sm:flex-row p-1.5 rounded-xl border gap-1.5 w-full sm:w-auto"
+                         style="border-color:rgba(255,255,255,0.16);background:rgba(255,255,255,0.03);backdrop-filter:blur(12px);"
                          role="tablist"
                          aria-label="Kategori Proyek">
 
-                        <!-- Morphing active indicator ("the yellowed one") -->
+                        <!-- Morphing active indicator -->
                         <div id="project-filter-pill"
                              class="filter-morph-pill"
                              aria-hidden="true"></div>
@@ -259,8 +226,7 @@
                                     aria-selected="{{ $key === 'all' ? 'true' : 'false' }}"
                                     tabindex="{{ $key === 'all' ? '0' : '-1' }}"
                                     data-category="{{ $key }}"
-                                    class="project-filter-tab group relative z-10 flex min-h-[44px] items-center justify-center rounded-xl px-4 py-2.5 text-xs font-semibold tracking-wide whitespace-nowrap transition-colors duration-200 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f7d340] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060412]"
-                                    style="{{ $key === 'all' ? 'color:#0d0820;font-weight:700;' : 'color:#c0a8e8;font-weight:600;' }}">
+                                    class="project-filter-tab group relative z-10 flex min-h-[40px] items-center justify-center rounded-lg px-4 py-2 text-xs tracking-wide whitespace-nowrap transition-colors duration-200 select-none focus-visible:outline-none">
                                 <span class="tab-label pointer-events-none transition-transform duration-150 group-active:scale-95">
                                     {{ $translatedTabs[$key] ?? $label }}
                                 </span>
@@ -271,78 +237,66 @@
             </div>
 
             <!-- Featured Showcase: Paksadita Paksi -->
-            <div class="reveal mt-10 rounded-2xl border p-6 sm:p-8"
-                 style="border-color:rgba(247,211,64,0.35);background:radial-gradient(ellipse at top right, rgba(107,79,168,0.32) 0%, rgba(22,13,48,0.9) 70%);box-shadow:0 0 50px 6px rgba(192,132,252,0.16), 0 0 100px 20px rgba(247,211,64,0.07);">
+            <div class="reveal vsp-card-featured mt-10 p-6 sm:p-8">
                 <div class="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-center">
                     <div class="lg:col-span-7">
                         <div class="flex flex-wrap items-center gap-2.5">
-                            <span class="inline-flex items-center gap-1.5 rounded-lg px-3 py-1 font-mono text-xs font-bold"
-                                  style="background:rgba(247,211,64,0.18);color:#f7d340;border:1px solid rgba(247,211,64,0.4);">
+                            <span class="vsp-badge" style="padding:5px 12px;font-size:11px;">
                                 ★ PROYEK UNGGULAN
                             </span>
-                            <span class="inline-flex items-center rounded-lg px-2.5 py-1 font-mono text-xs font-semibold"
-                                  style="background:rgba(192,132,252,0.12);color:#c084fc;border:1px solid rgba(192,132,252,0.25);">
+                            <span class="cat-badge">
                                 Web Interaktif &amp; Portofolio
                             </span>
                         </div>
 
-                        <h3 class="mt-4 text-2xl sm:text-3xl font-extrabold tracking-tight" style="color:#f0ebff;">
+                        <h3 class="mt-4 text-2xl sm:text-3xl font-semibold tracking-[-0.03em] text-white">
                             Paksadita Paksi
                         </h3>
-                        <p class="mt-2 text-base leading-relaxed" style="color:#c0a8e8;">
+                        <p class="mt-2 text-[15px] leading-relaxed text-[#9a9a9a]">
                             Platform web interaktif dan portofolio digital yang menyajikan pengalaman visual memikat, navigasi yang responsif, serta performa pemuatan yang cepat di berbagai ukuran layar.
                         </p>
 
                         <div class="mt-4 flex flex-wrap gap-2">
                             @foreach (['Laravel', 'PHP', 'Tailwind CSS', 'JavaScript', 'Responsive Web'] as $tech)
-                                <span class="rounded-md border px-2.5 py-1 font-mono text-xs"
-                                      style="border-color:rgba(107,79,168,0.4);background:rgba(6,4,18,0.7);color:#f7d340;">
-                                    {{ $tech }}
-                                </span>
+                                <span class="tech-chip">{{ $tech }}</span>
                             @endforeach
                         </div>
 
                         <div class="mt-6 flex flex-wrap items-center gap-3">
                             <a href="https://mrizqys.web.id" target="_blank" rel="noopener noreferrer"
-                               class="inline-flex min-h-[44px] items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold transition-all active:scale-95"
-                               style="background:#f7d340;color:#0d0820;"
-                               onmouseover="this.style.background='#ffe033';this.style.boxShadow='0 0 20px 2px rgba(247,211,64,0.4)'"
-                               onmouseout="this.style.background='#f7d340';this.style.boxShadow='none'">
+                               class="btn btn-solid" style="height:42px;min-height:42px;">
                                 <span>Buka Live Preview (mrizqys.web.id)</span>
-                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                <svg class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                                 </svg>
                             </a>
                         </div>
                     </div>
 
                     <div class="lg:col-span-5">
-                        <div class="rounded-xl border p-4 sm:p-5" style="border-color:rgba(107,79,168,0.4);background:rgba(6,4,18,0.75);">
-                            <div class="flex items-center justify-between border-b pb-3" style="border-color:rgba(107,79,168,0.25);">
-                                <span class="font-mono text-xs font-semibold" style="color:#f7d340;">Pratinjau Situs</span>
-                                <span class="font-mono text-[11px]" style="color:#9270d0;">mrizqys.web.id</span>
+                        <div class="rounded-xl border p-4 sm:p-5" style="border-color:rgba(255,255,255,0.12);background:rgba(0,0,0,0.6);">
+                            <div class="flex items-center justify-between border-b pb-3" style="border-color:rgba(255,255,255,0.1);">
+                                <span class="font-mono text-xs font-semibold text-white">Pratinjau Situs</span>
+                                <span class="font-mono text-[11px] text-[#9a9a9a]">mrizqys.web.id</span>
                             </div>
                             <div class="mt-4 space-y-3 font-mono text-xs">
                                 <div class="flex items-center justify-between">
-                                    <span style="color:#9270d0;">Status Web:</span>
-                                    <span class="inline-flex items-center gap-1.5 font-bold" style="color:#34d399;">
+                                    <span class="text-[#9a9a9a]">Status Web:</span>
+                                    <span class="inline-flex items-center gap-1.5 font-medium text-emerald-400">
                                         <span class="h-2 w-2 rounded-full bg-emerald-400"></span> Online &amp; Aktif
                                     </span>
                                 </div>
                                 <div class="flex items-center justify-between">
-                                    <span style="color:#9270d0;">Domain:</span>
-                                    <span style="color:#e9e0ff;">mrizqys.web.id</span>
+                                    <span class="text-[#9a9a9a]">Domain:</span>
+                                    <span class="text-white">mrizqys.web.id</span>
                                 </div>
                                 <div class="flex items-center justify-between">
-                                    <span style="color:#9270d0;">Aksesibilitas:</span>
-                                    <span style="color:#f7d340;">Mobile &amp; Desktop Ready</span>
+                                    <span class="text-[#9a9a9a]">Aksesibilitas:</span>
+                                    <span class="text-[#d8d8d8]">Mobile &amp; Desktop Ready</span>
                                 </div>
                             </div>
                             <a href="https://mrizqys.web.id" target="_blank" rel="noopener noreferrer"
-                               class="mt-4 flex w-full items-center justify-center gap-2 rounded-lg border py-2 text-xs font-semibold transition-colors"
-                               style="border-color:rgba(247,211,64,0.3);color:#f7d340;"
-                               onmouseover="this.style.background='rgba(247,211,64,0.1)'"
-                               onmouseout="this.style.background='transparent'">
+                               class="btn btn-ghost mt-4 w-full" style="height:40px;min-height:40px;">
                                 Kunjungi Situs Sekarang &rarr;
                             </a>
                         </div>
@@ -352,7 +306,6 @@
 
             <!-- Projects Grid -->
             @php
-                // Jika database kosong, sediakan data fallback berbahasa Indonesia lengkap dengan Paksadita Paksi
                 $displayProjects = $projects->isNotEmpty() ? $projects : collect([
                     (object)[
                         'id' => 1,
@@ -437,8 +390,7 @@
             <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 @forelse ($displayProjects as $index => $project)
                     <article
-                        class="project-card reveal reveal-delay-{{ min($index + 1, 4) }} flex flex-col rounded-2xl border transition-all duration-300"
-                        style="border-color:rgba(107,79,168,0.3);background:rgba(22,13,48,0.75);"
+                        class="project-card vsp-card reveal reveal-delay-{{ min($index + 1, 4) }} flex flex-col"
                         data-category="{{ $project->category }}"
                         data-project-json="{{ json_encode([
                             'id'               => $project->id,
@@ -455,46 +407,37 @@
                             'demoUrl'          => $project->demo_url,
                             'systemMetrics'    => $project->system_metrics,
                         ]) }}"
-                        onmouseover="this.style.borderColor='rgba(192,132,252,0.5)';this.style.boxShadow='0 0 32px 4px rgba(107,79,168,0.15)'"
-                        onmouseout="this.style.borderColor='rgba(107,79,168,0.3)';this.style.boxShadow='none'"
                     >
                         <div class="flex flex-1 flex-col p-6">
                             <!-- Category + metric -->
                             <div class="flex items-center justify-between gap-2">
-                                <span class="inline-flex items-center rounded-lg px-2.5 py-1 font-mono text-xs font-semibold"
-                                      style="background:rgba(192,132,252,0.12);color:#c084fc;border:1px solid rgba(192,132,252,0.25);">
+                                <span class="cat-badge">
                                     {{ $project->category_label ?? $project->category }}
                                 </span>
                                 @if (!empty($project->system_metrics))
-                                    <span class="max-w-[160px] truncate font-mono text-[10px]" style="color:#9270d0;" title="{{ $project->system_metrics }}">
+                                    <span class="max-w-[160px] truncate font-mono text-[10px] text-[#9a9a9a]" title="{{ $project->system_metrics }}">
                                         {{ $project->system_metrics }}
                                     </span>
                                 @endif
                             </div>
 
                             <!-- Title & tagline -->
-                            <h3 class="mt-4 text-xl font-bold tracking-tight" style="color:#f0ebff;">{{ $project->title }}</h3>
-                            <p class="mt-2 text-sm leading-relaxed" style="color:#9270d0;">{{ $project->tagline }}</p>
+                            <h3 class="mt-4 text-xl font-semibold tracking-[-0.02em] text-white">{{ $project->title }}</h3>
+                            <p class="mt-2 text-sm leading-relaxed text-[#9a9a9a]">{{ $project->tagline }}</p>
 
                             <!-- Tech chips (up to 4) -->
                             <div class="mt-4 flex flex-wrap gap-1.5">
                                 @foreach (array_slice($project->tech_stack ?? [], 0, 4) as $tech)
-                                    <span class="rounded-md border px-2 py-0.5 font-mono text-[11px]"
-                                          style="border-color:rgba(107,79,168,0.35);background:rgba(6,4,18,0.6);color:#9270d0;">
-                                        {{ $tech }}
-                                    </span>
+                                    <span class="tech-chip">{{ $tech }}</span>
                                 @endforeach
                             </div>
                         </div>
 
-                        <!-- Card footer with Case Study & Direct Live Preview -->
-                        <div class="border-t px-6 py-4" style="border-color:rgba(107,79,168,0.2);">
+                        <!-- Card footer -->
+                        <div class="border-t px-6 py-4" style="border-color:rgba(255,255,255,0.08);">
                             <div class="flex items-center justify-between gap-2">
                                 <button type="button" data-open-project-modal
-                                        class="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold transition-colors"
-                                        style="color:#f7d340;"
-                                        onmouseover="this.style.color='#ffe033'"
-                                        onmouseout="this.style.color='#f7d340'">
+                                        class="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-medium text-white transition-colors hover:text-[#d8d8d8]">
                                     Detail Proyek
                                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -505,12 +448,9 @@
                                     @if (!empty($project->demo_url))
                                         <a href="{{ $project->demo_url }}"
                                            target="_blank" rel="noopener noreferrer"
-                                           class="inline-flex min-h-[38px] items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all active:scale-95"
-                                           style="background:rgba(247,211,64,0.15);color:#f7d340;border:1px solid rgba(247,211,64,0.35);"
-                                           onmouseover="this.style.background='#f7d340';this.style.color='#0d0820'"
-                                           onmouseout="this.style.background='rgba(247,211,64,0.15)';this.style.color='#f7d340'">
+                                           class="btn btn-ghost" style="min-height:36px;height:36px;padding:0 12px;font-size:12px;">
                                             <span>Live Preview</span>
-                                            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <svg class="ml-1.5 h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                                             </svg>
                                         </a>
@@ -520,10 +460,8 @@
                                         <a href="{{ $project->github_url }}"
                                            target="_blank" rel="noopener noreferrer"
                                            aria-label="Lihat kode sumber {{ $project->title }} di GitHub"
-                                           class="flex h-11 w-11 items-center justify-center rounded-xl border transition-all"
-                                           style="border-color:rgba(107,79,168,0.35);color:#9270d0;"
-                                           onmouseover="this.style.borderColor='rgba(192,132,252,0.5)';this.style.color='#c0a8e8';this.style.background='rgba(79,51,138,0.3)'"
-                                           onmouseout="this.style.borderColor='rgba(107,79,168,0.35)';this.style.color='#9270d0';this.style.background='transparent'">
+                                           class="flex h-10 w-10 items-center justify-center rounded-lg border transition-colors hover:border-white/40 hover:text-white"
+                                           style="border-color:rgba(255,255,255,0.14);color:#9a9a9a;">
                                             <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
                                             </svg>
@@ -534,77 +472,119 @@
                         </div>
                     </article>
                 @empty
-                    <div class="col-span-full rounded-2xl border border-dashed p-12 text-center" style="border-color:rgba(107,79,168,0.3);">
-                        <p class="font-semibold" style="color:#f0ebff;">Belum ada proyek di kategori ini.</p>
-                        <p class="mt-1 text-sm" style="color:#6b4fa8;">Silakan pilih tab kategori lainnya untuk melihat karya saya.</p>
+                    <div class="col-span-full rounded-2xl border border-dashed p-12 text-center" style="border-color:rgba(255,255,255,0.16);">
+                        <p class="font-semibold text-white">Belum ada proyek di kategori ini.</p>
+                        <p class="mt-1 text-sm text-[#9a9a9a]">Silakan pilih tab kategori lainnya untuk melihat karya saya.</p>
                     </div>
                 @endforelse
             </div>
 
             <!-- Filter empty state -->
-            <div id="projects-empty-state" class="hidden mt-8 rounded-2xl border border-dashed p-12 text-center" style="border-color:rgba(107,79,168,0.3);">
-                <p class="font-semibold" style="color:#f0ebff;">Belum ada proyek di kategori ini.</p>
-                <p class="mt-1 text-sm" style="color:#6b4fa8;">Silakan klik kategori lainnya untuk melihat hasil karya.</p>
+            <div id="projects-empty-state" class="hidden mt-8 rounded-2xl border border-dashed p-12 text-center" style="border-color:rgba(255,255,255,0.16);">
+                <p class="font-semibold text-white">Belum ada proyek di kategori ini.</p>
+                <p class="mt-1 text-sm text-[#9a9a9a]">Silakan klik kategori lainnya untuk melihat hasil karya.</p>
             </div>
         </div>
     </section>
 
     <!-- ━━━ ARCHITECTURE / SKILLS ━━━ -->
-    <section id="architecture" class="border-t py-20" style="border-color:rgba(107,79,168,0.2);">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="architecture" class="section-divider py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
 
-            <div class="reveal mb-14 max-w-2xl">
-                <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl" style="color:#f0ebff;">
-                    Keahlian &amp; Pendekatan Teknis
-                </h2>
-                <p class="mt-3 text-base" style="color:#9270d0;">
-                    Prinsip kerja saya dalam membangun sistem: terstruktur, mudah dipelihara, dan memiliki performa nyata yang terukur.
-                </p>
+            <div class="reveal mb-12 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+                <div class="max-w-2xl">
+                    <h2 class="text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
+                        Keahlian &amp; <em class="vsp-serif font-normal">Pendekatan</em> Teknis
+                    </h2>
+                    <p class="mt-3 text-[15px] text-[#9a9a9a]">
+                        Prinsip kerja saya dalam membangun sistem: terstruktur, mudah dipelihara, dan memiliki performa nyata yang terukur.
+                    </p>
+                </div>
+
+                <!-- Stack chips -->
+                <div class="lg:max-w-md">
+                    <p class="mb-2.5 font-mono text-[11px] font-medium uppercase tracking-widest text-[#9a9a9a]">Teknologi Utama</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        @foreach (['Laravel 12', 'PHP 8.5', 'PostgreSQL / MySQL', 'Redis Streams', 'Tailwind CSS', 'JavaScript & Alpine.js', 'Docker'] as $tech)
+                            <span class="tech-chip">{{ $tech }}</span>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Spec Bar (ringkasan_sistem.json) -->
+            <div class="vsp-card reveal mb-8 p-6">
+                <div class="flex items-center justify-between border-b pb-3.5" style="border-color:rgba(255,255,255,0.12);">
+                    <div class="flex items-center gap-3">
+                        <div class="flex gap-1.5" aria-hidden="true">
+                            <span class="h-2.5 w-2.5 rounded-full bg-white/80"></span>
+                            <span class="h-2.5 w-2.5 rounded-full bg-white/35"></span>
+                            <span class="h-2.5 w-2.5 rounded-full bg-white/15"></span>
+                        </div>
+                        <span class="font-mono text-xs text-white">$ cek_arsitektur --rinci</span>
+                    </div>
+                    <span class="font-mono text-xs text-[#9a9a9a]">ringkasan_sistem.json</span>
+                </div>
+                <div class="mt-4 grid grid-cols-1 gap-4 font-mono text-xs md:grid-cols-3">
+                    <div class="rounded-lg border p-3.5" style="border-color:rgba(255,255,255,0.1);background:rgba(255,255,255,0.02);">
+                        <span class="text-[#9a9a9a]">Pengujian Kode</span>
+                        <p class="mt-1 text-sm font-semibold text-white">PHPUnit Suite</p>
+                        <p class="mt-0.5 text-[11px] text-[#d8d8d8]">Feature &amp; Unit Test</p>
+                    </div>
+                    <div class="rounded-lg border p-3.5" style="border-color:rgba(255,255,255,0.1);background:rgba(255,255,255,0.02);">
+                        <span class="text-[#9a9a9a]">Standar Kode</span>
+                        <p class="mt-1 text-sm font-semibold text-white">PSR-12 / Pint</p>
+                        <p class="mt-0.5 text-[11px] text-[#d8d8d8]">Strict types aktif</p>
+                    </div>
+                    <div class="rounded-lg border p-3.5" style="border-color:rgba(255,255,255,0.1);background:rgba(255,255,255,0.02);">
+                        <span class="text-[#9a9a9a]">Lingkungan Kerja</span>
+                        <p class="mt-1 text-sm font-semibold text-white">PHP 8.5 &bull; Laravel 12</p>
+                        <p class="mt-0.5 text-[11px] text-[#d8d8d8]">MySQL / SQLite &bull; Vite Pipeline</p>
+                    </div>
+                </div>
             </div>
 
             <!-- 3-col staggered cards -->
             <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
 
                 <!-- Card 1 -->
-                <div class="reveal reveal-delay-1 rounded-2xl border p-6"
-                     style="border-color:rgba(107,79,168,0.35);background:rgba(22,13,48,0.75);">
-                    <div class="flex h-12 w-12 items-center justify-center rounded-xl"
-                         style="background:rgba(192,132,252,0.12);color:#c084fc;">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <div class="vsp-card reveal reveal-delay-1 p-6">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-lg border"
+                         style="border-color:rgba(255,255,255,0.14);background:rgba(255,255,255,0.05);color:#fff;">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
                         </svg>
                     </div>
-                    <h3 class="mt-5 text-lg font-bold" style="color:#f0ebff;">Backend Cepat &amp; Tangguh</h3>
-                    <p class="mt-2 text-sm leading-relaxed" style="color:#9270d0;">
+                    <h3 class="mt-5 text-lg font-semibold tracking-[-0.02em] text-white">Backend Cepat &amp; Tangguh</h3>
+                    <p class="mt-2 text-sm leading-relaxed text-[#9a9a9a]">
                         Optimalisasi database, caching efisien dengan Redis, dan pemrosesan antrean latar belakang agar performa web tetap prima.
                     </p>
                     <ul class="mt-5 space-y-2">
                         @foreach (['Struktur &amp; Indeks Relasi Database Efisien', 'Redis Streams &amp; Manajemen Caching', 'Arsitektur RESTful API yang Bersih &amp; Aman'] as $item)
-                            <li class="flex items-center gap-2.5 font-mono text-xs" style="color:#c0a8e8;">
-                                <span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background:#f7d340;" aria-hidden="true"></span>
+                            <li class="flex items-center gap-2.5 font-mono text-xs text-[#d8d8d8]">
+                                <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-white/70" aria-hidden="true"></span>
                                 {!! $item !!}
                             </li>
                         @endforeach
                     </ul>
                 </div>
 
-                <!-- Card 2 (gold accent) -->
-                <div class="reveal reveal-delay-2 rounded-2xl border p-6"
-                     style="border-color:rgba(247,211,64,0.3);background:rgba(22,13,48,0.75);">
-                    <div class="flex h-12 w-12 items-center justify-center rounded-xl"
-                         style="background:rgba(247,211,64,0.12);color:#f7d340;">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <!-- Card 2 -->
+                <div class="vsp-card reveal reveal-delay-2 p-6">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-lg border"
+                         style="border-color:rgba(255,255,255,0.14);background:rgba(255,255,255,0.05);color:#fff;">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
                         </svg>
                     </div>
-                    <h3 class="mt-5 text-lg font-bold" style="color:#f7d340;">Antarmuka Web yang Nyaman</h3>
-                    <p class="mt-2 text-sm leading-relaxed" style="color:#9270d0;">
+                    <h3 class="mt-5 text-lg font-semibold tracking-[-0.02em] text-white">Antarmuka Web yang Nyaman</h3>
+                    <p class="mt-2 text-sm leading-relaxed text-[#9a9a9a]">
                         Penerapan HTML5 semantik, kontras warna yang nyaman di mata, aksesibilitas ramah pengguna, dan tata letak responsif di setiap perangkat.
                     </p>
                     <ul class="mt-5 space-y-2">
                         @foreach (['Desain Responsif &amp; Modern dengan Tailwind CSS', 'Aksesibilitas &amp; Struktur Navigasi Ramah Pengguna', 'Formulir Interaktif dengan Validasi Cepat'] as $item)
-                            <li class="flex items-center gap-2.5 font-mono text-xs" style="color:#c0a8e8;">
-                                <span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background:#f7d340;" aria-hidden="true"></span>
+                            <li class="flex items-center gap-2.5 font-mono text-xs text-[#d8d8d8]">
+                                <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-white/70" aria-hidden="true"></span>
                                 {!! $item !!}
                             </li>
                         @endforeach
@@ -612,22 +592,21 @@
                 </div>
 
                 <!-- Card 3 -->
-                <div class="reveal reveal-delay-3 rounded-2xl border p-6"
-                     style="border-color:rgba(107,79,168,0.35);background:rgba(22,13,48,0.75);">
-                    <div class="flex h-12 w-12 items-center justify-center rounded-xl"
-                         style="background:rgba(192,132,252,0.12);color:#c084fc;">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <div class="vsp-card reveal reveal-delay-3 p-6">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-lg border"
+                         style="border-color:rgba(255,255,255,0.14);background:rgba(255,255,255,0.05);color:#fff;">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                         </svg>
                     </div>
-                    <h3 class="mt-5 text-lg font-bold" style="color:#f0ebff;">Kualitas Kode &amp; Pengujian</h3>
-                    <p class="mt-2 text-sm leading-relaxed" style="color:#9270d0;">
+                    <h3 class="mt-5 text-lg font-semibold tracking-[-0.02em] text-white">Kualitas Kode &amp; Pengujian</h3>
+                    <p class="mt-2 text-sm leading-relaxed text-[#9a9a9a]">
                         Pengujian otomatis menggunakan PHPUnit, penegakan standar kode PSR, dan workflow terstandarisasi untuk mencegah potensi bug.
                     </p>
                     <ul class="mt-5 space-y-2">
-                        @foreach (['Automated Testing PHPUnit (Feature &amp; Unit)', 'Standarisasi Kode dengan Laravel Pint', 'Konfigurasi Docker yang Konsisten &amp; Reusable'] as $item)
-                            <li class="flex items-center gap-2.5 font-mono text-xs" style="color:#c0a8e8;">
-                                <span class="h-1.5 w-1.5 shrink-0 rounded-full" style="background:#f7d340;" aria-hidden="true"></span>
+                        @foreach (['Automated Testing PHPUnit (Feature &amp; Unit)', 'Standar Kode dengan Laravel Pint', 'Konfigurasi Docker yang Konsisten &amp; Reusable'] as $item)
+                            <li class="flex items-center gap-2.5 font-mono text-xs text-[#d8d8d8]">
+                                <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-white/70" aria-hidden="true"></span>
                                 {!! $item !!}
                             </li>
                         @endforeach
@@ -638,37 +617,36 @@
     </section>
 
     <!-- ━━━ EXPERIENCE ━━━ -->
-    <section id="experience" class="border-t py-20" style="border-color:rgba(107,79,168,0.2);background:rgba(13,8,32,0.5);">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="experience" class="section-divider py-20" style="background:rgba(255,255,255,0.015);">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
 
             <div class="reveal mb-14 max-w-2xl">
-                <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl" style="color:#f0ebff;">
-                    Pengalaman &amp; Perjalanan Kerja
+                <h2 class="text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
+                    Pengalaman &amp; <em class="vsp-serif font-normal">Perjalanan</em> Kerja
                 </h2>
-                <p class="mt-3 text-base" style="color:#9270d0;">
+                <p class="mt-3 text-[15px] text-[#9a9a9a]">
                     Rekam jejak dalam membangun sistem perangkat lunak, merancang antarmuka, dan memberikan solusi teknologi yang berdampak nyata.
                 </p>
             </div>
 
             <!-- Timeline -->
-            <div class="ml-2 space-y-10 border-l sm:ml-4" style="border-color:rgba(107,79,168,0.3);">
+            <div class="ml-2 space-y-10 border-l sm:ml-4" style="border-color:rgba(255,255,255,0.16);">
 
                 @foreach ([
-                    ['title' => 'Senior Full-Stack Engineer',   'period' => '2023 — Sekarang', 'sub' => 'Sistem Terdistribusi &amp; Aplikasi Web Modern', 'gold' => true,  'body' => 'Merancang dan memimpin arsitektur sistem berbasis Laravel modular. Mengoptimalkan antrean latar belakang Redis untuk memproses ratusan ribu tugas terjadwal harian serta meningkatkan kecepatan respon sistem.'],
-                    ['title' => 'Backend Laravel Developer',    'period' => '2021 — 2023',     'sub' => 'Layanan API &amp; Arsitektur Database',           'gold' => false, 'body' => 'Membangun integrasi gateway pembayaran yang aman, sistem webhook otomatis, serta RESTful API terstruktur untuk kebutuhan aplikasi mobile dan antarmuka web.'],
-                    ['title' => 'Software Engineer',            'period' => '2019 — 2021',     'sub' => 'Pengembangan Web Full-Stack',                     'gold' => false, 'body' => 'Mengembangkan portal klien, dashboard manajemen data internal, dan sistem laporan otomatis menggunakan Laravel, MySQL, serta JavaScript modern.'],
+                    ['title' => 'Senior Full-Stack Engineer',   'period' => '2023 - Sekarang', 'sub' => 'Sistem Terdistribusi &amp; Aplikasi Web Modern', 'active' => true,  'body' => 'Merancang dan memimpin arsitektur sistem berbasis Laravel modular. Mengoptimalkan antrean latar belakang Redis untuk memproses ratusan ribu tugas terjadwal harian serta meningkatkan kecepatan respon sistem.'],
+                    ['title' => 'Backend Laravel Developer',    'period' => '2021 - 2023',     'sub' => 'Layanan API &amp; Arsitektur Database',           'active' => false, 'body' => 'Membangun integrasi gateway pembayaran yang aman, sistem webhook otomatis, serta RESTful API terstruktur untuk kebutuhan aplikasi mobile dan antarmuka web.'],
+                    ['title' => 'Software Engineer',            'period' => '2019 - 2021',     'sub' => 'Pengembangan Web Full-Stack',                     'active' => false, 'body' => 'Mengembangkan portal klien, dashboard manajemen data internal, dan sistem laporan otomatis menggunakan Laravel, MySQL, serta JavaScript modern.'],
                 ] as $i => $role)
                     <div class="reveal reveal-delay-{{ $i + 1 }} relative pl-8 sm:pl-10">
-                        <span class="absolute -left-[9px] mt-1.5 h-4 w-4 rounded-full border-2"
-                              style="background:{{ $role['gold'] ? '#f7d340' : '#2e1b5c' }};border-color:{{ $role['gold'] ? '#0d0820' : '#6b4fa8' }};{{ $role['gold'] ? 'box-shadow:0 0 10px 2px rgba(247,211,64,0.3);' : '' }}"
+                        <span class="absolute -left-[9px] mt-1.5 h-4 w-4 rounded-full {{ $role['active'] ? 'timeline-dot-active' : 'timeline-dot' }}"
                               aria-hidden="true"></span>
 
                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                            <h3 class="text-lg font-bold" style="color:#f0ebff;">{{ $role['title'] }}</h3>
-                            <span class="font-mono text-xs" style="color:#f7d340;">{{ $role['period'] }}</span>
+                            <h3 class="text-lg font-semibold tracking-[-0.02em] text-white">{{ $role['title'] }}</h3>
+                            <span class="font-mono text-xs text-[#d8d8d8]">{{ $role['period'] }}</span>
                         </div>
-                        <p class="mt-1 text-sm font-semibold" style="color:{{ $role['gold'] ? '#f7d340' : '#9270d0' }};">{!! $role['sub'] !!}</p>
-                        <p class="mt-3 text-sm leading-relaxed" style="color:#c0a8e8;">{{ $role['body'] }}</p>
+                        <p class="mt-1 text-sm font-medium {{ $role['active'] ? 'text-white' : 'text-[#9a9a9a]' }}">{!! $role['sub'] !!}</p>
+                        <p class="mt-3 text-sm leading-relaxed text-[#9a9a9a]">{{ $role['body'] }}</p>
                     </div>
                 @endforeach
             </div>
@@ -676,46 +654,45 @@
     </section>
 
     <!-- ━━━ CONTACT ━━━ -->
-    <section id="contact" class="border-t py-20" style="border-color:rgba(107,79,168,0.2);">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="contact" class="section-divider py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
             <div class="grid grid-cols-1 gap-14 lg:grid-cols-12">
 
                 <!-- Left narrative -->
                 <div class="lg:col-span-5 reveal">
-                    <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl" style="color:#f0ebff;">
-                        Mari Terhubung
+                    <h2 class="text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
+                        Mari <em class="vsp-serif font-normal">Terhubung</em>
                     </h2>
-                    <p class="mt-4 text-base leading-relaxed" style="color:#9270d0;">
+                    <p class="mt-4 text-[15px] leading-relaxed text-[#9a9a9a]">
                         Punya ide proyek menarik, butuh bantuan arsitektur sistem web, atau ingin mengajak kolaborasi? Pintu selalu terbuka, silakan tinggalkan pesan dan saya akan membalasnya dengan senang hati.
                     </p>
 
                     <div class="mt-8 space-y-4">
                         <div class="flex items-center gap-4">
-                            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl"
-                                  style="background:rgba(192,132,252,0.1);color:#c084fc;" aria-hidden="true">
+                            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border"
+                                  style="border-color:rgba(255,255,255,0.14);background:rgba(255,255,255,0.05);color:#fff;" aria-hidden="true">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                 </svg>
                             </span>
                             <div>
-                                <span class="block font-mono text-xs" style="color:#9270d0;">Email Langsung</span>
-                                <a href="mailto:gamergoblin889@gmail.com" class="font-semibold transition-colors" style="color:#e9e0ff;"
-                                   onmouseover="this.style.color='#f7d340'" onmouseout="this.style.color='#e9e0ff'">
+                                <span class="block font-mono text-xs text-[#9a9a9a]">Email Langsung</span>
+                                <a href="mailto:gamergoblin889@gmail.com" class="font-medium text-white transition-colors hover:text-[#d8d8d8]">
                                     gamergoblin889@gmail.com
                                 </a>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-4">
-                            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl"
-                                  style="background:rgba(192,132,252,0.1);color:#c084fc;" aria-hidden="true">
+                            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border"
+                                  style="border-color:rgba(255,255,255,0.14);background:rgba(255,255,255,0.05);color:#fff;" aria-hidden="true">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
                             </span>
                             <div>
-                                <span class="block font-mono text-xs" style="color:#9270d0;">Domisili</span>
-                                <span class="font-semibold" style="color:#e9e0ff;">Jawa Barat, Indonesia</span>
+                                <span class="block font-mono text-xs text-[#9a9a9a]">Domisili</span>
+                                <span class="font-medium text-white">Jawa Barat, Indonesia</span>
                             </div>
                         </div>
                     </div>
@@ -723,11 +700,10 @@
 
                 <!-- Right form card -->
                 <div class="lg:col-span-7 reveal reveal-delay-2">
-                    <div class="rounded-2xl border p-6 sm:p-8"
-                         style="border-color:rgba(107,79,168,0.4);background:rgba(22,13,48,0.8);">
+                    <div class="vsp-card p-6 sm:p-8">
 
                         @if (session('success'))
-                            <div tabindex="-1" class="mb-6 rounded-xl border p-4 text-sm font-medium"
+                            <div tabindex="-1" class="mb-6 rounded-lg border p-4 text-sm font-medium"
                                  style="border-color:rgba(52,211,153,0.3);background:rgba(52,211,153,0.08);color:#6ee7b7;">
                                 {{ session('success') }}
                             </div>
@@ -747,16 +723,13 @@
                             <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
                                 <!-- Name -->
                                 <div>
-                                    <label for="contact-name" class="block text-xs font-semibold uppercase tracking-widest" style="color:#9270d0;">
-                                        Nama Anda <span style="color:#f7d340;" aria-label="wajib diisi">*</span>
+                                    <label for="contact-name" class="block text-xs font-medium uppercase tracking-widest text-[#9a9a9a]">
+                                        Nama Anda <span class="text-white" aria-label="wajib diisi">*</span>
                                     </label>
                                     <input type="text" id="contact-name" name="name"
                                            value="{{ old('name') }}" required
                                            placeholder="Tuliskan nama Anda"
-                                           class="mt-2 block w-full rounded-xl border px-4 py-3 text-sm transition placeholder:text-opacity-40 focus:outline-none focus:ring-2"
-                                           style="border-color:rgba(107,79,168,0.4);background:rgba(6,4,18,0.7);color:#e9e0ff;"
-                                           onfocus="this.style.borderColor='rgba(247,211,64,0.5)';this.style.boxShadow='0 0 0 2px rgba(247,211,64,0.12)'"
-                                           onblur="this.style.borderColor='rgba(107,79,168,0.4)';this.style.boxShadow='none'">
+                                           class="vsp-input mt-2">
                                     <p data-error-feedback="name" class="mt-1.5 text-xs {{ $errors->has('name') ? '' : 'hidden' }}" style="color:#f87171;">
                                         {{ $errors->first('name') }}
                                     </p>
@@ -764,16 +737,13 @@
 
                                 <!-- Email -->
                                 <div>
-                                    <label for="contact-email" class="block text-xs font-semibold uppercase tracking-widest" style="color:#9270d0;">
-                                        Alamat Email <span style="color:#f7d340;" aria-label="wajib diisi">*</span>
+                                    <label for="contact-email" class="block text-xs font-medium uppercase tracking-widest text-[#9a9a9a]">
+                                        Alamat Email <span class="text-white" aria-label="wajib diisi">*</span>
                                     </label>
                                     <input type="email" id="contact-email" name="email"
                                            value="{{ old('email') }}" required
                                            placeholder="nama@email.com"
-                                           class="mt-2 block w-full rounded-xl border px-4 py-3 text-sm transition focus:outline-none"
-                                           style="border-color:rgba(107,79,168,0.4);background:rgba(6,4,18,0.7);color:#e9e0ff;"
-                                           onfocus="this.style.borderColor='rgba(247,211,64,0.5)';this.style.boxShadow='0 0 0 2px rgba(247,211,64,0.12)'"
-                                           onblur="this.style.borderColor='rgba(107,79,168,0.4)';this.style.boxShadow='none'">
+                                           class="vsp-input mt-2">
                                     <p data-error-feedback="email" class="mt-1.5 text-xs {{ $errors->has('email') ? '' : 'hidden' }}" style="color:#f87171;">
                                         {{ $errors->first('email') }}
                                     </p>
@@ -782,16 +752,13 @@
 
                             <!-- Subject -->
                             <div>
-                                <label for="contact-subject" class="block text-xs font-semibold uppercase tracking-widest" style="color:#9270d0;">
-                                    Subjek Pesan <span style="color:#f7d340;" aria-label="wajib diisi">*</span>
+                                <label for="contact-subject" class="block text-xs font-medium uppercase tracking-widest text-[#9a9a9a]">
+                                    Subjek Pesan <span class="text-white" aria-label="wajib diisi">*</span>
                                 </label>
                                 <input type="text" id="contact-subject" name="subject"
                                        value="{{ old('subject') }}" required
                                        placeholder="Contoh: Diskusi Proyek Web / Penawaran Kolaborasi"
-                                       class="mt-2 block w-full rounded-xl border px-4 py-3 text-sm transition focus:outline-none"
-                                       style="border-color:rgba(107,79,168,0.4);background:rgba(6,4,18,0.7);color:#e9e0ff;"
-                                       onfocus="this.style.borderColor='rgba(247,211,64,0.5)';this.style.boxShadow='0 0 0 2px rgba(247,211,64,0.12)'"
-                                       onblur="this.style.borderColor='rgba(107,79,168,0.4)';this.style.boxShadow='none'">
+                                       class="vsp-input mt-2">
                                 <p data-error-feedback="subject" class="mt-1.5 text-xs {{ $errors->has('subject') ? '' : 'hidden' }}" style="color:#f87171;">
                                     {{ $errors->first('subject') }}
                                 </p>
@@ -799,27 +766,20 @@
 
                             <!-- Message -->
                             <div>
-                                <label for="contact-message" class="block text-xs font-semibold uppercase tracking-widest" style="color:#9270d0;">
-                                    Pesan Anda <span style="color:#f7d340;" aria-label="wajib diisi">*</span>
+                                <label for="contact-message" class="block text-xs font-medium uppercase tracking-widest text-[#9a9a9a]">
+                                    Pesan Anda <span class="text-white" aria-label="wajib diisi">*</span>
                                 </label>
                                 <textarea id="contact-message" name="message" rows="4" required
                                           placeholder="Ceritakan sedikit tentang proyek, kebutuhan teknis, atau hal yang ingin Anda diskusikan..."
-                                          class="mt-2 block w-full rounded-xl border px-4 py-3 text-sm transition focus:outline-none resize-none"
-                                          style="border-color:rgba(107,79,168,0.4);background:rgba(6,4,18,0.7);color:#e9e0ff;"
-                                          onfocus="this.style.borderColor='rgba(247,211,64,0.5)';this.style.boxShadow='0 0 0 2px rgba(247,211,64,0.12)'"
-                                          onblur="this.style.borderColor='rgba(107,79,168,0.4)';this.style.boxShadow='none'">{{ old('message') }}</textarea>
+                                          class="vsp-input mt-2 resize-none">{{ old('message') }}</textarea>
                                 <p data-error-feedback="message" class="mt-1.5 text-xs {{ $errors->has('message') ? '' : 'hidden' }}" style="color:#f87171;">
                                     {{ $errors->first('message') }}
                                 </p>
                             </div>
 
                             <!-- Submit -->
-                            <button type="submit"
-                                    class="inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-200 active:scale-[0.98] disabled:opacity-60"
-                                    style="background:#f7d340;color:#0d0820;"
-                                    onmouseover="if(!this.disabled){this.style.background='#ffe033';this.style.boxShadow='0 0 22px 3px rgba(247,211,64,0.4)'}"
-                                    onmouseout="this.style.background='#f7d340';this.style.boxShadow='none'">
-                                <svg id="submit-btn-spinner" class="hidden h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                            <button type="submit" class="btn btn-solid w-full" style="height:46px;">
+                                <svg id="submit-btn-spinner" class="hidden mr-2 h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
@@ -835,16 +795,15 @@
     </main>
 
     <!-- ━━━ FOOTER ━━━ -->
-    <footer class="relative z-10 border-t py-10" style="border-color:rgba(107,79,168,0.2);background:rgba(6,4,18,0.85);backdrop-filter:blur(12px);">
-        <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6 lg:px-8">
-            <span class="text-sm" style="color:#9270d0;">
-                <span style="color:#c0a8e8;font-weight:600;">Kikii &bull; Full-Stack Web Developer</span>
+    <footer class="relative z-10 section-divider py-10" style="background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);">
+        <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6 lg:px-10">
+            <span class="text-[13.5px] text-[#9a9a9a]">
+                <span class="font-medium text-white">Kikii &bull; Full-Stack Web Developer</span>
                 &nbsp;&bull;&nbsp; Dibangun dengan Laravel 12 &amp; Tailwind CSS
             </span>
-            <div class="flex items-center gap-6 text-sm" style="color:#9270d0;">
+            <div class="flex items-center gap-6 text-[13.5px] text-[#9a9a9a]">
                 @foreach (['projects' => 'Proyek', 'architecture' => 'Keahlian', 'experience' => 'Pengalaman', 'contact' => 'Kontak'] as $anchor => $label)
-                    <a href="#{{ $anchor }}" class="transition-colors"
-                       onmouseover="this.style.color='#f7d340'" onmouseout="this.style.color='#9270d0'">{{ $label }}</a>
+                    <a href="#{{ $anchor }}" class="transition-colors hover:text-white">{{ $label }}</a>
                 @endforeach
             </div>
         </div>
@@ -853,78 +812,69 @@
     <!-- ━━━ PROJECT MODAL ━━━ -->
     <div id="project-modal" role="dialog" aria-modal="true" aria-labelledby="modal-project-title"
          class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-8"
-         style="background:rgba(6,4,18,0.85);backdrop-filter:blur(8px);">
+         style="background:rgba(0,0,0,0.85);backdrop-filter:blur(10px);">
 
         <div class="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl border p-6 sm:p-8"
-             style="border-color:rgba(107,79,168,0.5);background:#0d0820;box-shadow:0 0 60px 8px rgba(107,79,168,0.2);">
+             style="border-color:rgba(255,255,255,0.18);background:#0a0a0a;box-shadow:0 0 60px rgba(255,255,255,0.06);">
 
             <!-- Close button -->
             <button type="button" data-modal-close aria-label="Tutup detail proyek"
-                    class="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-xl border transition-all"
-                    style="border-color:rgba(107,79,168,0.4);color:#9270d0;"
-                    onmouseover="this.style.borderColor='rgba(192,132,252,0.5)';this.style.color='#c0a8e8';this.style.background='rgba(79,51,138,0.3)'"
-                    onmouseout="this.style.borderColor='rgba(107,79,168,0.4)';this.style.color='#9270d0';this.style.background='transparent'">
+                    class="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-lg border transition-colors hover:border-white/40 hover:text-white"
+                    style="border-color:rgba(255,255,255,0.14);color:#9a9a9a;">
                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
 
             <div class="pr-14">
-                <span id="modal-project-category" class="inline-flex items-center rounded-lg border px-2.5 py-1 font-mono text-xs font-semibold"
-                      style="border-color:rgba(192,132,252,0.25);background:rgba(192,132,252,0.1);color:#c084fc;"></span>
-                <h2 id="modal-project-title" class="mt-3 text-2xl font-extrabold tracking-tight sm:text-3xl" style="color:#f0ebff;"></h2>
-                <p id="modal-project-tagline" class="mt-2 text-base" style="color:#9270d0;"></p>
+                <span id="modal-project-category" class="cat-badge"></span>
+                <h2 id="modal-project-title" class="mt-3 text-2xl font-semibold tracking-[-0.03em] text-white sm:text-3xl"></h2>
+                <p id="modal-project-tagline" class="mt-2 text-base text-[#9a9a9a]"></p>
             </div>
 
             <!-- Metrics banner -->
-            <div id="modal-project-metrics-wrapper" class="mt-5 rounded-xl border p-4 font-mono text-xs"
-                 style="border-color:rgba(247,211,64,0.25);background:rgba(247,211,64,0.06);color:#f7d340;">
-                <span class="font-bold">Info &amp; Performa:</span>
+            <div id="modal-project-metrics-wrapper" class="mt-5 rounded-lg border p-4 font-mono text-xs"
+                 style="border-color:rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);color:#d8d8d8;">
+                <span class="font-semibold text-white">Info &amp; Performa:</span>
                 <span id="modal-project-metrics" class="ml-1"></span>
             </div>
 
             <!-- Description -->
             <div class="mt-6">
-                <h3 class="text-xs font-semibold uppercase tracking-widest" style="color:#9270d0;">Ringkasan Proyek</h3>
-                <p id="modal-project-description" class="mt-2 text-sm leading-relaxed" style="color:#c0a8e8;"></p>
+                <h3 class="text-xs font-medium uppercase tracking-widest text-[#9a9a9a]">Ringkasan Proyek</h3>
+                <p id="modal-project-description" class="mt-2 text-sm leading-relaxed text-[#d8d8d8]"></p>
             </div>
 
             <!-- Architecture -->
-            <div id="modal-project-architecture-wrapper" class="mt-5 rounded-xl border p-4"
-                 style="border-color:rgba(107,79,168,0.35);background:rgba(6,4,18,0.7);">
-                <h3 class="font-mono text-xs font-semibold uppercase tracking-widest" style="color:#c084fc;">Strategi &amp; Arsitektur</h3>
-                <p id="modal-project-architecture" class="mt-2 font-mono text-xs leading-relaxed" style="color:#9270d0;"></p>
+            <div id="modal-project-architecture-wrapper" class="mt-5 rounded-lg border p-4"
+                 style="border-color:rgba(255,255,255,0.12);background:rgba(255,255,255,0.02);">
+                <h3 class="font-mono text-xs font-semibold uppercase tracking-widest text-white">Strategi &amp; Arsitektur</h3>
+                <p id="modal-project-architecture" class="mt-2 font-mono text-xs leading-relaxed text-[#9a9a9a]"></p>
             </div>
 
             <!-- Features -->
             <div class="mt-6">
-                <h3 class="text-xs font-semibold uppercase tracking-widest" style="color:#9270d0;">Fitur Utama</h3>
+                <h3 class="text-xs font-medium uppercase tracking-widest text-[#9a9a9a]">Fitur Utama</h3>
                 <ul id="modal-project-features" class="mt-3 space-y-2.5"></ul>
             </div>
 
             <!-- Tech stack -->
-            <div class="mt-6 border-t pt-5" style="border-color:rgba(107,79,168,0.25);">
-                <h3 class="font-mono text-xs font-semibold uppercase tracking-widest" style="color:#9270d0;">Teknologi yang Digunakan</h3>
+            <div class="mt-6 border-t pt-5" style="border-color:rgba(255,255,255,0.12);">
+                <h3 class="font-mono text-xs font-medium uppercase tracking-widest text-[#9a9a9a]">Teknologi yang Digunakan</h3>
                 <div id="modal-project-tech-stack" class="mt-3 flex flex-wrap gap-2"></div>
             </div>
 
             <!-- Actions -->
-            <div class="mt-7 flex flex-wrap items-center justify-end gap-3 border-t pt-5" style="border-color:rgba(107,79,168,0.25);">
+            <div class="mt-7 flex flex-wrap items-center justify-end gap-3 border-t pt-5" style="border-color:rgba(255,255,255,0.12);">
                 <a id="modal-project-github" href="#" target="_blank" rel="noopener noreferrer"
-                   class="inline-flex min-h-[44px] items-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-semibold transition-all"
-                   style="border-color:rgba(107,79,168,0.4);color:#c0a8e8;"
-                   onmouseover="this.style.borderColor='rgba(192,132,252,0.5)';this.style.background='rgba(79,51,138,0.3)'"
-                   onmouseout="this.style.borderColor='rgba(107,79,168,0.4)';this.style.background='transparent'">
-                    <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                   class="btn btn-ghost">
+                    <svg class="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
                     </svg>
                     Lihat di GitHub
                 </a>
                 <a id="modal-project-demo" href="#" target="_blank" rel="noopener noreferrer"
-                   class="inline-flex min-h-[44px] items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all active:scale-95"
-                   style="background:#f7d340;color:#0d0820;"
-                   onmouseover="this.style.background='#ffe033';this.style.boxShadow='0 0 18px 2px rgba(247,211,64,0.4)'"
-                   onmouseout="this.style.background='#f7d340';this.style.boxShadow='none'">
+                   class="btn btn-solid">
                     Kunjungi Website / Live Preview
                 </a>
             </div>
